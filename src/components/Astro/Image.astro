@@ -1,5 +1,5 @@
 ---
-let {src, width, height} = Astro.props
+let {src, width, height, rotate} = Astro.props
 const acceptHeaders = Astro.request.headers.get('accept');
 // console.log("IMAGE headerS!: " , acceptHeaders);
 
@@ -20,7 +20,7 @@ const localImage = src.startsWith('/assets/')
 
 console.log("SRC here: ", src)
 
-const newUrl = "/images?src=" + src + "&format=" + format;
+const newUrl = "/images?src=" + src + "&width=" + width + "&rotate=" + rotate + "&format=" + format;
 
 console.log("newURL: ", newUrl)
 // console.log("forma: " , forma);
