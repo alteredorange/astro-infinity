@@ -18,9 +18,11 @@ const format = acceptHeaders == "*/*" ? "avif" : acceptHeaders.includes("image/a
 
 const localImage = src.startsWith('/assets/')
 
+console.log("SRC here: ", src)
 
+const newUrl = "/images?src=" + src + "&format=" + format;
 
-const newUrl = "/api/image/?" + src + "?format=" + format;
+console.log("newURL: ", newUrl)
 // console.log("forma: " , forma);
 // console.log(avif)
 
