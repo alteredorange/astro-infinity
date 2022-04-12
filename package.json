@@ -1,0 +1,28 @@
+{
+  "name": "astro-image",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "git": "commity -a -p"
+  },
+  "devDependencies": {
+    "@astrojs/node": "^0.0.2",
+    "@astrojs/partytown": "^0.1.0",
+    "@astrojs/svelte": "^0.0.2",
+    "@astrojs/tailwind": "^0.1.0",
+    "@pierred/commity": "^1.7.0",
+    "astro": "^1.0.0-beta.8",
+    "astro-imagetools": "^0.4.1",
+    "svelte": "^3.46.4"
+  },
+  "dependencies": {
+    "astro-feather-icons": "^1.0.2",
+    "astro-icon": "^0.7.1",
+    "sharp": "^0.30.3",
+    "vite": "^2.9.1"
+  }
+}

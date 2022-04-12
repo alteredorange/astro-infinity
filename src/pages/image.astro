@@ -1,0 +1,55 @@
+---
+import Image from "../components/Astro/Image.astro"
+import sharp from 'sharp';
+const request = Astro.request;
+// console.log(request)
+const headers = Astro.request.headers.get('accept');
+console.log("headerS!: " , headers);
+// import Image from "../components/Astro/Image.astro";
+
+// console.log(headers)
+
+// import { Img } from "astro-imagetools/components";
+
+
+let thing
+// const response = await fetch('http://localhost:3000/api/images')
+//     console.log(response)
+//     const data = await response.blob().then(br => thing = br);
+//     console.log(thing)
+//     const img = document.createElement('img');
+//     img.src = URL.createObjectURL(data);
+
+
+//     console.log(data)
+
+---
+
+
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+	<header>
+			<div>
+			{headers}
+				<img width="60" height="80" src="/assets/logo.svg" alt="Astro logo">
+				<img src="/assets/Glasses.png" alt="glasses">
+					<img src="/assets/sharp/Glasses.jpg" alt="glasses">
+				<!-- <Image src="/assests/Glasses.png" /> -->
+				<!-- <img src={response} alt=""> -->
+				<!-- <img src={thing} alt="glasses">
+				{thing} -->
+				<Image src="https://picsum.photos/200/300" alt="A random image" />
+
+			</div>
+	</header>
+
+
+</html>

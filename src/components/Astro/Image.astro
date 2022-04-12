@@ -1,0 +1,35 @@
+---
+let {src, width, height} = Astro.props
+const acceptHeaders = Astro.request.headers.get('accept');
+// console.log("IMAGE headerS!: " , acceptHeaders);
+
+// const avif = acceptHeaders.match(/avif|\*\/\*/) ? "avif" : false;
+// const webp = acceptHeaders.includes("webp") || acceptHeaders.includes("*/*");
+
+// const test = "text/html,application/xhtml+xml,application/xml;q=0.9,image/,image/webp,image/apng,;q=0.8,application/signed-exchange;v=b3;q=0.9"
+// const form = acceptHeaders.match(/avif|\*\/\*/) ? "avif" : acceptHeaders.match(/webp|\*\/\*/) ? "webp" : "jpg";
+// const forma = test.match(/image\/avif|\*\/\*/) ? "avif" : test.match(/webp|\*\/\*/) ? "webp" : "jpg";
+
+//get format in priority of avif, webp, jpg
+const format = acceptHeaders == "*/*" ? "avif" : acceptHeaders.includes("image/avif") ? "avif" : acceptHeaders.includes("image/webp") ? "webp" : "jpg";
+// const b = test == "*/*" ? "avif" : test.includes("image/avif") ? "avif" : test.includes("image/webp") ? "webp" : "jpg";
+// console.log("FFFF", format)
+
+
+const localImage = src.startsWith('/assets/')
+
+
+
+const newUrl = "/api/image/?" + src + "?format=" + format;
+// console.log("forma: " , forma);
+// console.log(avif)
+
+// const format = avif ? "avif" : webp ? "webp" : "jpg";
+
+console.log(format)
+
+---
+
+{src}
+
+<img src={newUrl} height="100px" alt="">
