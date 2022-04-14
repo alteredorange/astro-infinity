@@ -74,31 +74,33 @@ if (blur) {
 	.toBuffer()
 
 
-	return new Response(image, {
+	return new Response(image.toString('base64'), {
 		headers: {
 		  'Content-Type': 'image/' + format,
 		  'Cach-Control': 'public, max-age=15552000',
 		  'mime-type': 'image/' + format,
-		  'Vary': 'accept, width, dpr, viewport-width'
+		  'Vary': 'accept, width, dpr, viewport-width',
+		  'isBase64Encoded': true
 
 		}
 	      });
 	} else {
 
 //sharp needs path from root directory
-const image = await sharp("assets/large.jpg")
+const image = await sharp(imgData)
 .rotate(rotate)
 .resize(width, 500, {fit: 'inside', position: 'attention'})
 .toFormat(format)
 .toBuffer()
 
 
-return new Response(image, {
+return new Response(image.toString('base64'), {
 	status: 200,
 	headers: {
 	  'Content-Type': 'image/' + format,
 	  'Cach-Control': 'public, max-age=15552000',
 	  'mime-type': 'image/' + format,
+	  'isBase64Encoded': true
 	}
       });
 
