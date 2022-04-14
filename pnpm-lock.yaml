@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@astrojs/netlify': ^0.2.3
   '@astrojs/node': ^0.0.2
   '@astrojs/partytown': ^0.1.0
   '@astrojs/svelte': ^0.0.2
@@ -20,6 +21,7 @@ dependencies:
   vite: 2.9.1
 
 devDependencies:
+  '@astrojs/netlify': 0.2.3
   '@astrojs/node': 0.0.2
   '@astrojs/partytown': 0.1.0
   '@astrojs/svelte': 0.0.2_svelte@3.46.6+vite@2.9.1
@@ -89,6 +91,12 @@ packages:
       unist-util-visit: 4.1.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@astrojs/netlify/0.2.3:
+    resolution: {integrity: sha512-55w0RrXAcEBLe8OL0HMrex1cOr/1dHQeKTIIE0U3JNt0bIScpANg0sWZ3GQXmRux1VTDytJjt/EmbTXvDf0/OA==}
+    dependencies:
+      '@astrojs/webapi': 0.11.0
     dev: true
 
   /@astrojs/node/0.0.2:

@@ -10,6 +10,7 @@
     "git": "commity -a -p"
   },
   "devDependencies": {
+    "@astrojs/netlify": "^0.2.3",
     "@astrojs/node": "^0.0.2",
     "@astrojs/partytown": "^0.1.0",
     "@astrojs/svelte": "^0.0.2",
