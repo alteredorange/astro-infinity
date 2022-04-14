@@ -87,7 +87,7 @@ if (blur) {
 //sharp needs path from root directory
 const image = await sharp(imgData )
 .rotate(rotate)
-.resize(width, 500, {fit: 'cover', position: 'attention'})
+.resize(width, 500, {fit: 'inside', position: 'attention'})
 .toFormat(format)
 .toBuffer()
 

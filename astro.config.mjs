@@ -3,7 +3,7 @@ import svelte from '@astrojs/svelte'
 import partytown from '@astrojs/partytown'
 import node from '@astrojs/node'
 import tailwind from '@astrojs/tailwind'
-import astroImagePlugin from 'astro-imagetools/plugin'
+// import astroImagePlugin from 'astro-imagetools/plugin'
 
 import vercel from '@astrojs/vercel'
 
@@ -13,7 +13,7 @@ export default defineConfig({
   integrations: [svelte(), partytown(), tailwind()],
   vite: {
     vite: {
-      plugins: [astroImagePlugin]
+      // plugins: [astroImagePlugin]
     },
     ssr: {
       external: ['svgo', 'astro-icon', 'sharp']
