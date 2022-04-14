@@ -9,7 +9,7 @@ import vercel from '@astrojs/vercel'
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [svelte(), partytown(), tailwind(), vercel()],
+  integrations: [svelte(), partytown(), tailwind(), node()],
   vite: {
     vite: {
       plugins: [astroImagePlugin]
