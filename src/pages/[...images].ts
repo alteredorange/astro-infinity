@@ -94,6 +94,7 @@ const image = await sharp(imgData )
 
 
 return new Response(image, {
+	status: 200,
 	headers: {
 	  'Content-Type': 'image/' + format,
 	  'Cach-Control': 'public, max-age=15552000',
