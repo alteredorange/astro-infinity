@@ -74,13 +74,13 @@ if (blur) {
 	.toBuffer()
 
 
-	return new Response(image.toString('base64'), {
+	return new Response(image, {
 		headers: {
 		  'Content-Type': 'image/' + format,
 		  'Cache-Control': 'public, max-age=15552000',
 		  'mime-type': 'image/' + format,
 		  'Vary': 'accept, width, dpr, viewport-width',
-		  'isBase64Encoded': true
+
 
 		}
 	      });
@@ -94,13 +94,13 @@ const image = await sharp(imgData)
 .toBuffer()
 
 
-return new Response(image.toString('base64'), {
+return new Response(image, {
 	status: 200,
 	headers: {
-	  'Content-Type': 'image/jpeg',
+	  'Content-Type': 'image/' + format,
 	  'Cache-Control': 'public, max-age=15552000',
-	  'mime-type': 'image/jpeg',
-	  'isBase64Encoded': true
+	  'mime-type': 'image/' + format,
+
 	}
       });
 
