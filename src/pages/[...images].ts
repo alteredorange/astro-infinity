@@ -77,7 +77,7 @@ if (blur) {
 	return new Response(image.toString('base64'), {
 		headers: {
 		  'Content-Type': 'image/' + format,
-		  'Cach-Control': 'public, max-age=15552000',
+		  'Cache-Control': 'public, max-age=15552000',
 		  'mime-type': 'image/' + format,
 		  'Vary': 'accept, width, dpr, viewport-width',
 		  'isBase64Encoded': true
@@ -97,9 +97,9 @@ const image = await sharp(imgData)
 return new Response(image.toString('base64'), {
 	status: 200,
 	headers: {
-	  'Content-Type': 'image/' + format,
-	  'Cach-Control': 'public, max-age=15552000',
-	  'mime-type': 'image/' + format,
+	  'Content-Type': 'image/jpeg',
+	  'Cache-Control': 'public, max-age=15552000',
+	  'mime-type': 'image/jpeg',
 	  'isBase64Encoded': true
 	}
       });
