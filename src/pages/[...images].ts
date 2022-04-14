@@ -63,7 +63,7 @@ console.log({CHdpr})
 
 if (blur) {
 	//sharp needs path from root directory
-	const image = await sharp(imgData )
+	const image = await sharp(src )
 	.rotate(rotate)
 	.resize({width: 20, height: 20, fit: 'cover'})
 	.toFormat(format)
