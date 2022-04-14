@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "node serveNode.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "git": "commity -a -p"
@@ -17,7 +17,8 @@
     "@astrojs/tailwind": "^0.1.0",
     "@astrojs/vercel": "^0.1.2",
     "@pierred/commity": "^1.7.0",
-    "astro": "^1.0.0-beta.8",
+    "astro": "^1.0.0-beta.12",
+    "express": "^4.17.3",
     "sharp": "^0.30.3",
     "svelte": "^3.46.4"
   },

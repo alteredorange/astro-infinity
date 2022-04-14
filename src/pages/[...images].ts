@@ -59,8 +59,8 @@ console.log({CHdpr})
 	const progressive = searchParams.get('progressive') //gets the progressive
 
 	const imgData = src.startsWith('/assets/') ? 'public' + src : await fetch(src).then(res => res.buffer())
-console.log({src})
-console.log({imgData})
+// console.log({src})
+// console.log({imgData})
 
 if (blur) {
 	//sharp needs path from root directory
