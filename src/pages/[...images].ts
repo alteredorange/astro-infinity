@@ -4,12 +4,17 @@ import sharp from 'sharp';
 export async function get(params, request) {
 	// console.log(request)
 	const acceptHeaders = request.headers.get('accept');
+
+	const hostName = new URL(request.url).hostname
+
+	// if (hostName !== 'localhost') return
+	// console.log({hostName})
 	const format = acceptHeaders == "*/*" ? "avif" : acceptHeaders.includes("image/avif") ? "avif" : acceptHeaders.includes("image/webp") ? "webp" : "jpg";
 	console.log({format})
-	const CHdpr = request.headers.get('DPR')
-	const CHwidth = request.headers.get('Viewport-Width') || Math.round(request.headers.get('Width') * (1/CHdpr)) || 0;
+	const CHdpr = request.headers.get('dpr')
+	const CHwidth = request.headers.get('viewport-width') || Math.round(request.headers.get('width') * (1/CHdpr)) || 0;
 console.log({CHdpr})
-	const test = request.headers.get('Viewport-Width') || Math.round(request.headers.get('Width') * (1/CHdpr)) || 0;
+	const test = request.headers.get('viewport-width') || Math.round(request.headers.get('width') * (1/CHdpr)) || 0;
 	console.log({test})
 
 // 	const h = request.headers.get('height')
@@ -72,8 +77,8 @@ if (blur) {
 		headers: {
 		  'Content-Type': 'image/' + format,
 		  'Cach-Control': 'public, max-age=15552000',
-		  'mime-type': 'image/webp',
-		  'Vary': 'Width, DPR, Viewport-Width'
+		  'mime-type': 'image/' + format,
+		  'Vary': 'accept, width, dpr, viewport-width'
 
 		}
 	      });
@@ -91,7 +96,7 @@ return new Response(image, {
 	headers: {
 	  'Content-Type': 'image/' + format,
 	  'Cach-Control': 'public, max-age=15552000',
-	  'mime-type': 'image/webp'
+	  'mime-type': 'image/' + format,
 	}
       });
 
