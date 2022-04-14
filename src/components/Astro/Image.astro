@@ -1,6 +1,9 @@
 ---
 let {src, width, height, rotate} = Astro.props
+
 const acceptHeaders = Astro.request.headers.get('accept');
+const w = Astro.request.headers.get('width')
+console.log({w})
 // console.log("IMAGE headerS!: " , acceptHeaders);
 
 // const avif = acceptHeaders.match(/avif|\*\/\*/) ? "avif" : false;
@@ -18,20 +21,23 @@ const format = acceptHeaders == "*/*" ? "avif" : acceptHeaders.includes("image/a
 
 const localImage = src.startsWith('/assets/')
 
-console.log("SRC here: ", src)
+// console.log("SRC here: ", src)
 
 const newUrl = "/images?src=" + src + "&width=" + width + "&rotate=" + rotate + "&format=" + format;
+const blurUrl = "/images?src=" + src + "&width=10" + "&format=" + format+"&blur=true";
 
-console.log("newURL: ", newUrl)
+// console.log("newURL: ", newUrl)
 // console.log("forma: " , forma);
 // console.log(avif)
 
 // const format = avif ? "avif" : webp ? "webp" : "jpg";
 
-console.log(format)
-
+// console.log(format)
+	const finalW = await width ? width + "px" : "" ;
+console.log({finalW})
 ---
 
-{src}
 
-<img src={newUrl} height="100px" alt="">
+<img width={finalW} height={height + "px"} src={newUrl} style={"background-size: cover; background-image:url('"+blurUrl+ "');"}  alt="hi">
+ <!-- src={newUrl} -->
+<!-- <img src={blurUrl} sizes="50vw" alt=""> -->

@@ -1,10 +1,11 @@
 ---
+
 import Image from "../components/Astro/Image.astro"
 import sharp from 'sharp';
 const request = Astro.request;
 // console.log(request)
 const headers = Astro.request.headers.get('accept');
-console.log("headerS!: " , headers);
+// console.log("headerS!: " , headers);
 // import Image from "../components/Astro/Image.astro";
 
 // console.log(headers)
@@ -32,6 +33,9 @@ let thing
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--
+    <meta name="accept-client-hints" content="true"> -->
+    <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width, DPR, Save-Data, Downlink, Sec-CH-Width">
     <title>Document</title>
 
 </head>
@@ -39,6 +43,8 @@ let thing
 	<header>
 			<div>
 			{headers}
+
+
 				<!-- <img width="60" height="80" src="/assets/logo.svg" alt="Astro logo"> -->
 				<!-- <img src="/assets/Glasses.png" alt="glasses"> -->
 					<!-- <img src="/assets/sharp/Glasses.jpg" alt="glasses"> -->
@@ -46,12 +52,18 @@ let thing
 				<!-- <img src={response} alt=""> -->
 				<!-- <img src={thing} alt="glasses">
 				{thing} https://picsum.photos/200/300-->/assets/Glasses.png
-				<Image src="/assets/Glasses.png" width="200" rotate="20" alt="A random image" />
+				<div class=""height="476px">
 
-<Image src="https://picsum.photos/500/400?random" alt="A random image" />
+				<Image client:idle src="/assets/large.jpg"  height="100" rotate="" alt="A random image" />
+
+				</div>
+content down here...
+<!-- <Image src="https://picsum.photos/500/400?random" alt="A random image" /> -->
 
 
 
+<br>
+more stuff..
 			</div>
 	</header>
 
