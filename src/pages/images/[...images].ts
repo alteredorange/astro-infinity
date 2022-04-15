@@ -7,15 +7,16 @@ export async function get(params, request) {
 	const hostName = new URL(request.url).hostname
 	const searchParams = new URL(request.url).searchParams //gets the params
 	const gif = searchParams.get('gif') //gets the gif
+	const webp = acceptHeaders.includes("image/webp")
 
 	// block other domains
 	// if (hostName !== 'localhost') return
 
-	const format = gif ? "gif" : acceptHeaders == "*/*" ? "avif" : acceptHeaders.includes("image/avif") ? "avif" : acceptHeaders.includes("image/webp") ? "webp" : "jpg";
-	console.log({format})
+	const format = acceptHeaders == "*/*" ? "avif" : acceptHeaders.includes("image/avif") ? "avif" : acceptHeaders.includes("image/webp") ? "webp" : "jpg";
+	// console.log({format})
 	const CHdpr = request.headers.get('dpr')
 	const CHwidth = request.headers.get('viewport-width') || Math.round(request.headers.get('width') * (1/CHdpr)) || 0;
-console.log({CHdpr})
+// console.log({CHdpr})
 	const test = request.headers.get('viewport-width') || Math.round(request.headers.get('width') * (1/CHdpr)) || 0;
 	console.log({test})
 
@@ -24,6 +25,8 @@ console.log({CHdpr})
 	const width = Number(searchParams.get('width')) || Number(CHwidth) || null//gets the width
 	const rotate = Number(searchParams.get('rotate')) || null //gets the rotatation angle
 	const height = Number(searchParams.get('height')) || null//gets the height
+	const flip = searchParams.get('flip') == "true" ? true: false //gets the flip
+	const flop = searchParams.get('flop') == "true" ? true: false  //gets the flop
 	const grayscale = searchParams.get('grayscale') //gets the grayscale
 	const blur = searchParams.get('blur') //gets the blur
 	const sharpen = searchParams.get('sharpen') //gets the sharpen
@@ -36,7 +39,7 @@ console.log({CHdpr})
 
 	const isAnimated = animated == 'true' || originalFormat == 'gif' ? true : false //sets if animated
 
-
+console.log({flip, flop})
 
 	// if ((animated === 'true') || (originalFormat == "gif")) animated = true
 
@@ -48,81 +51,53 @@ console.log({CHdpr})
 
 
 
-// 	const h = request.headers.get('height')
-// console.log({w})
-// const sec = request.headers.get('Sec-CH-Width')
-// console.log({sec})
+let resizedImage;
 
-	// const img = await fetch ("https://picsum.photos/500/400?random");
-	// const arrayBuffer = await img.arrayBuffer();
-	// const buffer = Buffer.from(arrayBuffer);
-
-
-	// //sharp needs path from root directory
-	// const image = await sharp(buffer)
-	// .rotate()
-	// .resize()
-	// .webp()
-	// .toBuffer()
-
-
-	// return new Response(image, {
-	// 	headers: {
-	// 	  'Content-Type': 'image/webp',
-	// 	  'Cach-Control': 'public, max-age=31536000',
-	// 	  'mime-type': 'image/webp'
-	// 	}
-	//       });
-
-	// console.log(img);
-
-
-
-// console.log({src})
-// console.log({imgData})
-// if (gif) {
-
+// if (blur) {
 // 	//sharp needs path from root directory
-// 	const image = await sharp(imgData, {animated: originalFormat == "gif" ? true : false} )
+// 	resizedImage = await sharp(imgData, {animated: isAnimated} )
 // 	.rotate(rotate)
-// 	.resize(width, height, {fit: 'inside'})
-// 	.toFormat('gif')
+// 	.resize(20, 20)
+// 	.toFormat(format)
 // 	// .toColourspace('b-w')
 // 	// .jpeg({ mozjpeg: true, quality: 10, progressive: false })
 // 	// .toFormat(format)
-// 	.toBuffer((err, data, info) => { console.log(info.size) });
+// 	.toBuffer()
+// 	}
+// 	else
 
-// 	return new Response(image, {
-// 		headers: {
-// 		  'Content-Type': 'image/gif',
-// 		  'Cache-Control': 'public, max-age=15552000',
-// 		  'mime-type': 'image/gif',
-// 		  'Vary': 'accept, width, dpr, viewport-width',
-
-
-// 		}
-// 	      });
-// } else
-
-let resizedImage;
-if (blur) {
-	//sharp needs path from root directory
-	resizedImage = await sharp(imgData, {animated: isAnimated} )
-	.rotate(rotate)
-	.resize({width: 20, height: 20, fit: 'cover'})
-	.toFormat(format)
-	// .toColourspace('b-w')
-	// .jpeg({ mozjpeg: true, quality: 10, progressive: false })
-	// .toFormat(format)
-	.toBuffer()
-	} else {
+	if (isAnimated && webp) {
 
 //sharp needs path from root directory
 resizedImage = await sharp(imgData, {animated: isAnimated} )
 .rotate(rotate)
-.resize(width, height, {fit: 'inside', position: 'attention'})
+.flip(flip)
+.flop(flop)
+.resize(width, height, {fit: 'inside'})
+.webp({ effort: 0 })
+// .toFormat("webp")
+.toBuffer()
+
+return new Response(resizedImage, {
+	status: 200,
+	headers: {
+	  'Content-Type': 'video/webp',
+	  'Cache-Control': 'public, max-age=15552000',
+	  'mime-type': 'video/webp',
+	  'Vary': 'accept, width, dpr, viewport-width',
+	}
+      });
+
+
+	}
+	else {
+	//sharp needs path from root directory
+resizedImage = await sharp(imgData, {animated: isAnimated} )
+.rotate(rotate)
+.resize(width, height, {fit: 'inside'})
 .toFormat(format)
 .toBuffer()
+
 	}
 
 	return new Response(resizedImage, {
