@@ -1,5 +1,5 @@
 ---
-let {src, width, height, rotate} = Astro.props
+let {src, width, height, rotate, gif, style, alt} = Astro.props
 
 const acceptHeaders = Astro.request.headers.get('accept');
 const w = Astro.request.headers.get('width')
@@ -23,8 +23,10 @@ const localImage = src.startsWith('/assets/')
 
 // console.log("SRC here: ", src)
 
-const newUrl = "/images?src=" + src + "&width=" + width + "&rotate=" + rotate + "&format=" + format;
-const blurUrl = "/images?src=" + src + "&width=10" + "&format=" + format+"&blur=true";
+const newUrl = "/images/?src=" + src + "&width=" + width + "&rotate=" + rotate + "&format=" + format + "&gif=" + gif;
+
+
+const blurUrl = "/images/?src=" + src + "&width=10" + "&format=" + format+"&blur=true"+ "&gif=" + gif;
 
 // console.log("newURL: ", newUrl)
 // console.log("forma: " , forma);
@@ -38,6 +40,11 @@ console.log({finalW})
 ---
 
 
-<img width={finalW} height={height + "px"} src={newUrl} style={"background-size: cover; background-image:url('"+blurUrl+ "');"}  alt="hi">
+<img class={style} width={finalW} height={height + "px"} src={newUrl} style={"background-size: cover; background-image:url('"+blurUrl+ "');"}  alt={alt}  >
+
+
+
+
+
  <!-- src={newUrl} -->
 <!-- <img src={blurUrl} sizes="50vw" alt=""> -->
