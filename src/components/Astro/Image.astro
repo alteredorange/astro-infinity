@@ -1,71 +1,79 @@
 ---
-let {src, width, height, rotate, gif, style, alt, flip, flop} = Astro.props
+let { src, width, height, rotate, gif, style, alt, flip, flop } = Astro.props;
+
 //put all props in an object
-const allProps = {src, width, height, rotate, gif, style, alt, flip, flop}
+const allProps = { src, width, height, rotate, gif, style, alt, flip, flop };
+
 //remove undefined props
-Object.keys(allProps).forEach(key => allProps[key] === undefined ? delete allProps[key] : {});
+Object.keys(allProps).forEach((key) =>
+  allProps[key] === undefined ? delete allProps[key] : {}
+);
+Object.keys(allProps).forEach((key) =>
+  allProps[key] == "" ? delete allProps[key] : {}
+);
+
 //construct srcUrl with defined props
-let srcUrl = "/images/?"
-Object.keys(allProps).forEach(key => srcUrl+=(key + "=" + allProps[key] + "&"));
+let srcUrl = "/images/?";
+Object.keys(allProps).forEach(
+  (key) => (srcUrl += key + "=" + allProps[key] + "&")
+);
+
 //get rid of trailing &
-srcUrl = srcUrl.slice(0,-1)
+srcUrl = srcUrl.slice(0, -1);
 
-
-
-const acceptHeaders = Astro.request.headers.get('accept');
-const w = Astro.request.headers.get('width')
-
-// console.log("IMAGE headerS!: " , acceptHeaders);
-
-
-// console.
-// const definedProps = testProps.filter(prop => prop !== undefined)
-// console.log(testProps)
-
-
-// const allProps = [{src},{width}, {height}, {rotate}, {gif}, {style}, {alt}, {flip}, {flop}]
-// allProps.flat(0)
-// console.log(allProps)
-// const definedProps = allProps.filter((e, i, a)=>{
-// console.log("hi: " + a.e)
-// return
-// })
-
-// console.log(allProps)
-// Object.keys(allProps).forEach((key) => {
-//   const value = allProps[key]
-//   console.log(key, value)
-// })
-
-
-// console.log(definedProps)
-
-// const avif = acceptHeaders.match(/avif|\*\/\*/) ? "avif" : false;
-// const webp = acceptHeaders.includes("webp") || acceptHeaders.includes("*/*");
-
-// const test = "text/html,application/xhtml+xml,application/xml;q=0.9,image/,image/webp,image/apng,;q=0.8,application/signed-exchange;v=b3;q=0.9"
-// const form = acceptHeaders.match(/avif|\*\/\*/) ? "avif" : acceptHeaders.match(/webp|\*\/\*/) ? "webp" : "jpg";
-// const forma = test.match(/image\/avif|\*\/\*/) ? "avif" : test.match(/webp|\*\/\*/) ? "webp" : "jpg";
-
+const acceptHeaders = Astro.request.headers.get("accept");
+const w = Astro.request.headers.get("width");
 
 //generate final link will all props that aren't "undefined"
-const finalLink = `${src}?w=${w}&h=${height}&fit=crop&fm=${gif ? "gif" : "jpg"}&flip=${flip ? "h" : "v"}&flop=${flop ? "h" : "v"}&rotate=${rotate}&q=${style}&alt=${alt}`
+const finalLink = `${src}?w=${w}&h=${height}&fit=crop&fm=${
+  gif ? "gif" : "jpg"
+}&flip=${flip ? "h" : "v"}&flop=${
+  flop ? "h" : "v"
+}&rotate=${rotate}&q=${style}&alt=${alt}`;
 
 //get format in priority of avif, webp, jpg
-const format = acceptHeaders == "*/*" ? "avif" : acceptHeaders.includes("image/avif") ? "avif" : acceptHeaders.includes("image/webp") ? "webp" : "jpg";
+const format =
+  acceptHeaders == "*/*"
+    ? "avif"
+    : acceptHeaders.includes("image/avif")
+    ? "avif"
+    : acceptHeaders.includes("image/webp")
+    ? "webp"
+    : "jpg";
 // const b = test == "*/*" ? "avif" : test.includes("image/avif") ? "avif" : test.includes("image/webp") ? "webp" : "jpg";
 // console.log("FFFF", format)
 
-if (style == "undefined") style = ""
+if (style == "undefined") style = "";
 
-const localImage = src.startsWith('/assets/')
+const localImage = src.startsWith("/assets/");
 
 // console.log("SRC here: ", src)
 
-const newUrl = "/images/?src=" + src + "&width=" + width + "&rotate=" + rotate + "&format=" + format + "&gif=" + gif + "&flip=" + flip + "&flop=" + flop;
+const newUrl =
+  "/images/?src=" +
+  src +
+  "&width=" +
+  width +
+  "&rotate=" +
+  rotate +
+  "&format=" +
+  format +
+  "&gif=" +
+  gif +
+  "&flip=" +
+  flip +
+  "&flop=" +
+  flop;
 
-
-const blurUrl = "/images/?src=" + src + "&width=10" + "&format=" + format+"&blur=true"+ "&gif=" + gif;
+const blurUrl =
+  "/images/?src=" +
+  src +
+  "&width=10" +
+  "&format=" +
+  format +
+  "&blur=true" +
+  "&gif=" +
+  gif;
 
 // console.log("newURL: ", newUrl)
 // console.log("forma: " , forma);
@@ -74,27 +82,16 @@ const blurUrl = "/images/?src=" + src + "&width=10" + "&format=" + format+"&blur
 // const format = avif ? "avif" : webp ? "webp" : "jpg";
 
 // console.log(format)
-	const finalW = await width ? width + "px" : "" ;
+const finalW = (await width) ? width + "px" : "";
 // console.log({finalW})
 ---
-<header>
-<style>
+
+<head> </head>
+
+<img class={style} width={finalW} height={height + "px"} src={srcUrl} alt={alt}
+/>
+
+<!-- <picture>
 
 
-</style>
-</header>
-
-<img class={style} width={finalW} height={height + "px"} src={srcUrl}  alt={alt}  >
-
-
-<!-- style={"display: inline-block; overflow: hidden; max-width: 100%; height: auto; background-position: 50% 50%; background-size: cover; background-image:url('"+blurUrl+ "');"} -->
-
-//picture tag with all available sizes
-<picture>
-
-
-</picture>
-
-
- <!-- src={newUrl} -->
-<!-- <img src={blurUrl} sizes="50vw" alt=""> -->
+</picture> -->

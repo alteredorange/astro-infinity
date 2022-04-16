@@ -1,10 +1,9 @@
 ---
-
-import Image from "../components/Astro/Image.astro"
-import sharp from 'sharp';
+import Image from "../components/Astro/Image.astro";
+import sharp from "sharp";
 const request = Astro.request;
 // console.log(request)
-const headers = Astro.request.headers.get('accept');
+const headers = Astro.request.headers.get("accept");
 // console.log("headerS!: " , headers);
 // import Image from "../components/Astro/Image.astro";
 
@@ -12,8 +11,7 @@ const headers = Astro.request.headers.get('accept');
 
 // import { Img } from "astro-imagetools/components";
 
-
-let thing
+let thing;
 // const response = await fetch('http://localhost:3000/api/images')
 //     console.log(response)
 //     const data = await response.blob().then(br => thing = br);
@@ -21,53 +19,53 @@ let thing
 //     const img = document.createElement('img');
 //     img.src = URL.createObjectURL(data);
 
-
 //     console.log(data)
-
 ---
 
-
 <html lang="en">
-<head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width, DPR, Save-Data, Downlink, Sec-CH-Width">
+    <meta
+      http-equiv="Accept-CH"
+      content="DPR, Viewport-Width, Width, DPR, Save-Data, Downlink, Sec-CH-Width"
+    />
     <title>Document</title>
+  </head>
 
-</head>
+  <header></header>
 
-	<header>
+  <div class="bg-red-400">
+    {headers}
 
-	</header>
-	<body>
-		<div class="bg-red-400">
-			{headers}
-
-
-				<!-- <img width="60" height="80" src="/assets/logo.svg" alt="Astro logo"> -->
-				<!-- <img src="/assets/Glasses.png" alt="glasses"> -->
-					<!-- <img src="/assets/sharp/Glasses.jpg" alt="glasses"> -->
-				<!-- <Image src="/assests/Glasses.png" /> -->
-				<!-- <img src={response} alt=""> -->
-				<!-- <img src={thing} alt="glasses">
+    <!-- <img width="60" height="80" src="/assets/logo.svg" alt="Astro logo"> -->
+    <!-- <img src="/assets/Glasses.png" alt="glasses"> -->
+    <!-- <img src="/assets/sharp/Glasses.jpg" alt="glasses"> -->
+    <!-- <Image src="/assests/Glasses.png" /> -->
+    <!-- <img src={response} alt=""> -->
+    <!-- <img src={thing} alt="glasses">
 				{thing} https://picsum.photos/200/300-->/assets/Glasses.png
-				<div class=""height="476px">
+    <div class="" height="476px">
+      <Image
+        client:idle
+        src="/assets/large.jpg"
+        width="50"
+        height="100"
+        rotate=""
+        alt="A random image"
+      />
+    </div>
+    content down here...
+    <Image
+      src="https://picsum.photos/500/400?random"
+      width="300"
+      height="300"
+      alt="A random image"
+    />
 
-				<Image client:idle src="/assets/large.jpg" width=50  height="100" rotate="" alt="A random image" />
-
-				</div>
-content down here...
-<Image src="https://picsum.photos/500/400?random" width=300 height=300 alt="A random image" />
-
-
-
-<br>
-more stuff..
-			</div>
-	</body>
-
-
+    <br />
+    more stuff..
+  </div>
 </html>

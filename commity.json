@@ -28,10 +28,6 @@
           {
             "value": "pkg",
             "description": "Changes that affect package (deps, config, readme...)"
-          },
-          {
-            "value": "🚀 init",
-            "description": "The Initial Commit!"
           }
         ]
       }

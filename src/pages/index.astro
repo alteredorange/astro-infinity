@@ -1,11 +1,12 @@
 ---
 // Style Imports
-import '../styles/global.css';
+import "../styles/global.css";
 import Image from "../components/Astro/Image.astro";
-import '../styles/home.css';
-import BlogPostPreview from '../components/BlogPostPreview.astro';
+import Head from "../components/Astro/Head.astro";
+import "../styles/home.css";
+import BlogPostPreview from "../components/BlogPostPreview.astro";
 // Component Imports
-import Tour from '../components/Tour.astro';
+import Tour from "../components/Tour.astro";
 // You can import components from any supported Framework here!
 /* ASTRO:COMPONENT_IMPORTS */
 
@@ -13,68 +14,81 @@ import Tour from '../components/Tour.astro';
 // You can write any JavaScript/TypeScript that you'd like here.
 // It will run during the build, but never in the browser.
 // All variables are available to use in the HTML template below.
-let title = 'Astro Image Site';
+let title = "Astro Image Site";
 // import { Icon } from 'astro-icon'
 // import { AirPlay, AtSign, Zap } from 'astro-feather-icons'
 
-let allPosts = await Astro.glob('./posts/*.md');
-allPosts = allPosts.sort((a, b) => new Date(b.frontmatter.publishDate).valueOf() - new Date(a.frontmatter.publishDate).valueOf());
-
+let allPosts = await Astro.glob("./posts/*.md");
+allPosts = allPosts.sort(
+  (a, b) =>
+    new Date(b.frontmatter.publishDate).valueOf() -
+    new Date(a.frontmatter.publishDate).valueOf()
+);
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
 ---
+
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width">
-	<title>{title}</title>
+  <style>
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      /* max-width: min(100%, 78ch); */
+    }
+    h1 {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin: 0;
+    }
+  </style>
 
-	<link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <Head title="Astro image Demo!" />
 
-	<style>
-		header {
-			display: flex;
-			flex-direction: column;
-			gap: 1em;
-			max-width: min(100%, 78ch);
-		}
-		h1
-		{
-			font-size: 2.5em;
-			font-weight: bold;
-			margin: 0;
-		}
-	</style>
-</head>
-<body>
-	<main>
-		<header class="flex m-auto text-center " >
-			<div class="">
-<Image client:idle src="/assets/large.jpg" width=400  height=400 rotate="" alt="A random image" />
-			<!-- <img width="500px"  height="500px" class="ml-7" src="/assets/thisistheway.gif" alt="This Is the Way"> -->
-			<Image width="500"  height="375" flop=true style="ml-20 mt-20" src="/assets/thisistheway.gif" alt="This Is the Way" gif=true />
-				<h1>This Is The Way... To Better Images!</h1>
-				<span class="text-sm">Walking Mando by the awesome <a class="text-sky-400" href="https://linktr.ee/gingemar">gingemar</a> </span>
-			</div>
-		</header>
+  <header class="flex m-auto text-center ">
+    <div
+      class="flex  flex-wrap mr-auto ml-auto object-center  text-center items-center"
+    >
+      <div class="flex w-50">
+        <img
+          width="500px"
+          height="375px"
+          class=""
+          src="/assets/thisistheway.gif"
+          alt="This Is the Way"
+        />
+        <span class="">1.6MB Gif</span>
+      </div>
+      <div class="flex flex-wrap"></div>
+      <Image
+        width="500"
+        height="375"
+        flop="true"
+        style=""
+        src="/assets/thisistheway.gif"
+        alt="This Is the Way"
+        gif="true"
+      />
+      <span class="text-center w-full">125KB Webp</span>
+    </div>
 
-		<Tour />
-		<section aria-label="Blog post list">
-					{allPosts.map((p) => <BlogPostPreview post={p} />)}
-				</section>
-		<!--
+    <h1>This Is The Way... To Better Images!</h1>
+    <span class="text-sm"
+      >Walking Mando by the awesome <a
+        class="text-sky-400"
+        href="https://linktr.ee/gingemar"
+        >gingemar
+      </a>
+    </span>
+  </header>
 
-		You can also use imported framework components directly in your markup!
-
-		Note: by default, these components are NOT interactive on the client.
-		The `:visible` directive tells Astro to make it interactive.
-
-		See https://docs.astro.build/core-concepts/component-hydration/
-
-		-->
-
-		<!-- ASTRO:COMPONENT_MARKUP -->
-	</main>
-</body>
+  <Image
+    client:idle
+    src="/assets/large.jpg"
+    width="400"
+    height="400"
+    rotate=""
+    alt="A random image"
+  />
 </html>

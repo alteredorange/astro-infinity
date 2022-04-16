@@ -7,7 +7,8 @@
     "start": "node serveNode.mjs",
     "build": "astro build",
     "preview": "astro preview",
-    "git": "commity -a -p"
+    "git": "commity -a -p",
+    "format": "pnpx prettier -w . --plugin-search-dir=."
   },
   "devDependencies": {
     "@astrojs/netlify": "^0.2.3",
@@ -19,6 +20,7 @@
     "@pierred/commity": "^1.7.0",
     "astro": "^1.0.0-beta.12",
     "express": "^4.17.3",
+    "prettier-plugin-astro": "^0.1.0-next.4",
     "sharp": "^0.30.3",
     "svelte": "^3.46.4"
   },

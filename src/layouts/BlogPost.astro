@@ -1,21 +1,23 @@
 ---
-import BlogPost from '../components/BlogPost.astro';
+import BlogPost from "../components/BlogPost.astro";
 const { content } = Astro.props;
-const { title, description, publishDate, author, heroImage, permalink, alt } = content;
+const { title, description, publishDate, author, heroImage, permalink, alt } =
+  content;
 ---
 
-<html lang={content.lang || 'en'}>
-	<head>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-lucario.css"/>
+<html lang={content.lang || "en"}>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-lucario.css"
+    />
+  </head>
 
-	</head>
-
-	<body>
-
-		<div class="bg-red-300 wrapper">
-			<BlogPost {title} {author} {heroImage} {publishDate} {alt}>
-				<slot />
-			</BlogPost>
-		</div>
-	</body>
+  <body>
+    <div class="bg-red-300 wrapper">
+      <BlogPost {title} {author} {heroImage} {publishDate} {alt}>
+        <slot></slot>
+      </BlogPost>
+    </div>
+  </body>
 </html>
