@@ -1,12 +1,12 @@
 ---
 // Style Imports
-import "../styles/global.css";
-import Image from "../components/Astro/Image.astro";
-import Head from "../components/Astro/Head.astro";
-import "../styles/home.css";
-import BlogPostPreview from "../components/BlogPostPreview.astro";
+import '../styles/global.css';
+import Image from '../components/astro/Image.astro';
+import Head from '../components/astro/Head.astro';
+import '../styles/home.css';
+
 // Component Imports
-import Tour from "../components/Tour.astro";
+
 // You can import components from any supported Framework here!
 /* ASTRO:COMPONENT_IMPORTS */
 
@@ -14,22 +14,15 @@ import Tour from "../components/Tour.astro";
 // You can write any JavaScript/TypeScript that you'd like here.
 // It will run during the build, but never in the browser.
 // All variables are available to use in the HTML template below.
-let title = "Astro Image Site";
+let title = 'Astro Image Site';
 // import { Icon } from 'astro-icon'
 // import { AirPlay, AtSign, Zap } from 'astro-feather-icons'
-
-let allPosts = await Astro.glob("./posts/*.md");
-allPosts = allPosts.sort(
-  (a, b) =>
-    new Date(b.frontmatter.publishDate).valueOf() -
-    new Date(a.frontmatter.publishDate).valueOf()
-);
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
 ---
 
-<html lang="en">
+<html lang='en'>
   <style>
     header {
       display: flex;
@@ -44,51 +37,101 @@ allPosts = allPosts.sort(
     }
   </style>
 
-  <Head title="Astro image Demo!" />
+  <Head title='Astro image Demo!' />
 
-  <header class="flex m-auto text-center ">
-    <div
-      class="flex  flex-wrap mr-auto ml-auto object-center  text-center items-center"
-    >
-      <div class="flex w-50">
+  <header class='flex m-auto text-center '>
+    <h1 class='font-bold w-full p-10 pt-15 text-2xl text-orange-500 '>Astro Image Demo</h1>
+    <div class='flex  flex-wrap mr-auto ml-auto object-center  text-center items-center'>
+      <figure>
         <img
-          width="500px"
-          height="375px"
-          class=""
-          src="/assets/thisistheway.gif"
-          alt="This Is the Way"
+          width='500px'
+          height='375px'
+          class=''
+          src='/assets/thisistheway.gif'
+          alt='This Is the Way'
         />
-        <span class="">1.6MB Gif</span>
-      </div>
-      <div class="flex flex-wrap"></div>
-      <Image
-        width="500"
-        height="375"
-        flop="true"
-        style=""
-        src="/assets/thisistheway.gif"
-        alt="This Is the Way"
-        gif="true"
-      />
-      <span class="text-center w-full">125KB Webp</span>
+
+        <figcaption class='font-semibold text-center'>1.6MB gif</figcaption>
+      </figure>
+
+      <figure>
+        <Image
+          width='500'
+          height='375'
+          flop='true'
+          style=''
+          src='/assets/thisistheway.gif'
+          alt='This Is the Way'
+        />
+
+        <figcaption class='font-semibold text-center'>125KB webp</figcaption>
+      </figure>
     </div>
 
     <h1>This Is The Way... To Better Images!</h1>
-    <span class="text-sm"
-      >Walking Mando by the awesome <a
-        class="text-sky-400"
-        href="https://linktr.ee/gingemar"
+    <span class='text-sm'
+      >Walking Mando by the awesome <a class='text-sky-400' href='https://linktr.ee/gingemar'
         >gingemar
       </a>
     </span>
   </header>
+  <div class='flex m-auto mt-10 text-center pt-15'>
+    <div class='flex flex-wrap mr-auto ml-auto object-center  text-center items-center'>
+      <figure>
+      <img
+        width='400px'
+        height='400px'
+        class=''
+        src='/assets/large.jpg'
+        alt='To Inifinity and Beyond'
+      />
+         <figcaption class='font-semibold text-center'>845KB jpg</figcaption>
+      </figure>
+        <figure>
+      <Image
+        client:idle
+        src='/assets/large.jpg'
+        width='400'
+        height='400'
+        rotate=''
+        alt='To Inifinity and Beyond'
+        style='ml-10'
+      />
+         <figcaption class='font-semibold text-center'>7.7KB avif</figcaption>
+      </figure>
+    </div>
+  </div>
 
-  <Image
-    client:idle
-    src="/assets/large.jpg"
-    width="400"
-    height="400"
-    rotate=""
-    alt="A random image"
-  />
+   <div class='m-auto mt-10 text-center pt-15 pb-20'>
+   <h2 class="text-2xl">
+
+   Works with external images too!</h2><br>
+  <div class='flex m-auto  text-center '>
+    <div class='flex flex-wrap mr-auto ml-auto object-center  text-center items-center'>
+      <figure>
+      <img
+        width='400px'
+        height='400px'
+        class=''
+        src='https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg'
+        alt='To Inifinity and Beyond'
+      />
+         <figcaption class='font-semibold text-center'>292KB jpg</figcaption>
+      </figure>
+        <figure>
+      <Image
+        client:idle
+        src='https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg'
+        width='400'
+        height='400'
+        rotate=''
+        alt='To Inifinity and Beyond'
+        style='ml-10'
+        preload=true
+      />
+         <figcaption class='font-semibold text-center'>2KB avif</figcaption>
+      </figure>
+    </div>
+    </div>
+  </div>
 </html>

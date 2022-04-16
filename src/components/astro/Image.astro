@@ -1,0 +1,176 @@
+---
+let { src, width, height, rotate, gif, style, alt, flip, flop, animated, preload } = Astro.props;
+console.log({ style });
+
+//put all props in an object (except for alt, which doesn't need to be passed)
+const allProps = {
+  src,
+  width,
+  height,
+  rotate,
+  gif,
+  style,
+  flip,
+  flop,
+  animated,
+  preload
+};
+
+//remove undefined props
+Object.keys(allProps).forEach((key) => (allProps[key] === undefined ? delete allProps[key] : {}));
+Object.keys(allProps).forEach((key) => (allProps[key] == '' ? delete allProps[key] : {}));
+
+//construct srcUrl with defined props
+let srcUrl = '/images/?';
+Object.keys(allProps).forEach((key) => (srcUrl += key + '=' + allProps[key] + '&'));
+
+//get rid of trailing &
+// srcUrl = srcUrl.slice(0, -1);
+
+const acceptHeaders = Astro.request.headers.get('accept');
+
+//get original image format
+const originalFormat = src.substring(src.lastIndexOf('.') + 1).toLocaleLowerCase();
+
+//check if image is animated
+const isAnimated = animated == 'true' || originalFormat == 'gif' ? true : false; //sets if animated
+
+// const w = Astro.request.headers.get("width");
+
+//generate final link will all props that aren't "undefined"
+// const finalLink = `${src}?w=${w}&h=${height}&fit=crop&fm=${
+//   gif ? "gif" : "jpg"
+// }&flip=${flip ? "h" : "v"}&flop=${
+//   flop ? "h" : "v"
+// }&rotate=${rotate}&q=${style}&alt=${alt}`;
+
+//get format in priority of avif, webp, jpg
+const format =
+  acceptHeaders == '*/*'
+    ? 'avif'
+    : acceptHeaders.includes('image/avif')
+    ? 'avif'
+    : acceptHeaders.includes('image/webp')
+    ? 'webp'
+    : 'jpg';
+
+const finalFormat = isAnimated ? (acceptHeaders.includes('image/webp') ? 'webp' : 'gif') : format;
+// const b = test == "*/*" ? "avif" : test.includes("image/avif") ? "avif" : test.includes("image/webp") ? "webp" : "jpg";
+// console.log("FFFF", format)
+let formats = new Set();
+
+formats.add(finalFormat);
+if (finalFormat != originalFormat) formats.add(originalFormat);
+if (!isAnimated) {
+  formats.add('avif');
+  formats.add('webp');
+  formats.add('jpg');
+}
+
+let avifSrcSet = '';
+let webpSrcSet = '';
+let jpgSrcSet = '';
+let gifSrcSet = '';
+
+formats.forEach((e) => {
+  if (e == 'avif') {
+    //for 1-3 dpr
+    for (let i = 1; i <= 3; i++) {
+      let newProps = allProps;
+      delete newProps['width'];
+      delete newProps['height'];
+      avifSrcSet += '/images/?width=' + width * i + '&height=' + height * i + '&';
+      Object.keys(newProps).forEach((key) => (avifSrcSet += key + '=' + newProps[key] + '&'));
+      avifSrcSet += `format=${e} ` + i + 'x, ';
+    }
+    avifSrcSet = avifSrcSet.slice(0, -2);
+  } else if (e == 'webp') {
+    //for 1-3 dpr
+    for (let i = 1; i <= 3; i++) {
+      let newProps = allProps;
+      delete newProps['width'];
+      delete newProps['height'];
+      webpSrcSet += '/images/?width=' + width * i + '&height=' + height * i + '&';
+      Object.keys(newProps).forEach((key) => (webpSrcSet += key + '=' + newProps[key] + '&'));
+      webpSrcSet += `format=${e} ` + i + 'x, ';
+    }
+    webpSrcSet = webpSrcSet.slice(0, -2);
+  } else if (e == 'jpg') {
+    //for 1-3 dpr
+    for (let i = 1; i <= 3; i++) {
+      let newProps = allProps;
+      delete newProps['width'];
+      delete newProps['height'];
+      jpgSrcSet += '/images/?width=' + width * i + '&height=' + height * i + '&';
+      Object.keys(newProps).forEach((key) => (jpgSrcSet += key + '=' + newProps[key] + '&'));
+      jpgSrcSet += `format=${e} ` + i + 'x, ';
+    }
+    jpgSrcSet = jpgSrcSet.slice(0, -2);
+  } else if (e == 'gif') {
+    //for 1-3 dpr
+    for (let i = 1; i <= 3; i++) {
+      let newProps = allProps;
+      delete newProps['width'];
+      delete newProps['height'];
+      gifSrcSet += '/images/?width=' + width * i + '&height=' + height * i + '&';
+      Object.keys(newProps).forEach((key) => (gifSrcSet += key + '=' + newProps[key] + '&'));
+      gifSrcSet += `format=${e} ` + i + 'x, ';
+    }
+    gifSrcSet = gifSrcSet.slice(0, -2);
+  }
+});
+
+const localImage = src.startsWith('/assets/');
+
+// console.log("SRC here: ", src)
+
+const newUrl =
+  '/images/?src=' +
+  src +
+  '&width=' +
+  width +
+  '&rotate=' +
+  rotate +
+  '&format=' +
+  format +
+  '&gif=' +
+  gif +
+  '&flip=' +
+  flip +
+  '&flop=' +
+  flop;
+
+const blurUrl =
+  '/images/?src=' + src + '&width=10' + '&format=' + format + '&blur=true' + '&gif=' + gif;
+
+// console.log("newURL: ", newUrl)
+// console.log("forma: " , forma);
+// console.log(avif)
+
+// const format = avif ? "avif" : webp ? "webp" : "jpg";
+
+// console.log(format)
+const finalW = width ? width + 'px' : '';
+// console.log({finalW})
+
+//sourse set for each image type
+const srcSet =
+  'srcSet=' + src + ' 1x, ' + src + ' 2x, ' + src + ' 3x, ' + src + ' 4x, ' + src + ' 5x';
+---
+
+<!-- <img class={style} width={finalW} height={height + 'px'} src={srcUrl} alt={alt} /> --><picture>
+  <!-- avif source -->
+  <source srcset={avifSrcSet} type='image/avif' />
+  <!-- webp source -->
+  <source srcset={webpSrcSet} type='image/webp' />
+  <!-- jpg source -->
+  <source srcset={jpgSrcSet} type='image/jpeg' />
+  <!-- webp video source -->
+  <source srcset={webpSrcSet} type='video/webp' />
+  <!-- gif source -->
+  <source srcset={gifSrcSet} type='image/gif' />
+
+  <!-- fallback image -->
+  <!-- <img src={srcUrl} alt={alt} /> -->
+  <img src={src} alt={alt} class={style} width={finalW} height={height + 'px'} />
+</picture>

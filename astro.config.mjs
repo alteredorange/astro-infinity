@@ -1,12 +1,12 @@
-import { defineConfig } from "astro/config";
-import svelte from "@astrojs/svelte";
-import partytown from "@astrojs/partytown";
-import node from "@astrojs/node";
-import tailwind from "@astrojs/tailwind"; // import astroImagePlugin from 'astro-imagetools/plugin'
+import { defineConfig } from 'astro/config';
+import svelte from '@astrojs/svelte';
+import partytown from '@astrojs/partytown';
+import node from '@astrojs/node';
+import tailwind from '@astrojs/tailwind'; // import astroImagePlugin from 'astro-imagetools/plugin'
 
 // import vercel from '@astrojs/vercel';
 
-import netlify from "@astrojs/netlify/functions";
+import netlify from '@astrojs/netlify/functions';
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,7 +16,7 @@ export default defineConfig({
       // plugins: [astroImagePlugin]
     },
     ssr: {
-      external: ["svgo", "astro-icon", "sharp"],
-    },
-  },
+      external: ['svgo', 'astro-icon', 'sharp']
+    }
+  }
 });

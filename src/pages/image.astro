@@ -1,9 +1,9 @@
 ---
-import Image from "../components/Astro/Image.astro";
-import sharp from "sharp";
+import Image from '../components/astro/Image.astro';
+import sharp from 'sharp';
 const request = Astro.request;
 // console.log(request)
-const headers = Astro.request.headers.get("accept");
+const headers = Astro.request.headers.get('accept');
 // console.log("headerS!: " , headers);
 // import Image from "../components/Astro/Image.astro";
 
@@ -22,22 +22,22 @@ let thing;
 //     console.log(data)
 ---
 
-<html lang="en">
+<html lang='en'>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <meta http-equiv='X-UA-Compatible' content='ie=edge' />
 
     <meta
-      http-equiv="Accept-CH"
-      content="DPR, Viewport-Width, Width, DPR, Save-Data, Downlink, Sec-CH-Width"
+      http-equiv='Accept-CH'
+      content='DPR, Viewport-Width, Width, DPR, Save-Data, Downlink, Sec-CH-Width'
     />
     <title>Document</title>
   </head>
 
   <header></header>
 
-  <div class="bg-red-400">
+  <div class='bg-red-400'>
     {headers}
 
     <!-- <img width="60" height="80" src="/assets/logo.svg" alt="Astro logo"> -->
@@ -47,22 +47,23 @@ let thing;
     <!-- <img src={response} alt=""> -->
     <!-- <img src={thing} alt="glasses">
 				{thing} https://picsum.photos/200/300-->/assets/Glasses.png
-    <div class="" height="476px">
+    <div class='' height='476px'>
       <Image
         client:idle
-        src="/assets/large.jpg"
-        width="50"
-        height="100"
-        rotate=""
-        alt="A random image"
+        src='/assets/large.jpg'
+        width='50'
+        height='100'
+        rotate=''
+        alt='A random image'
       />
     </div>
     content down here...
     <Image
-      src="https://picsum.photos/500/400?random"
-      width="300"
-      height="300"
-      alt="A random image"
+      src='https://picsum.photos/500/400?random'
+      width='300'
+      height='300'
+      alt='A random image'
+      style='ml-20'
     />
 
     <br />

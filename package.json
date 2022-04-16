@@ -21,6 +21,7 @@
     "astro": "^1.0.0-beta.12",
     "express": "^4.17.3",
     "prettier-plugin-astro": "^0.1.0-next.4",
+    "prettier-standard": "^16.4.1",
     "sharp": "^0.30.3",
     "svelte": "^3.46.4"
   },
