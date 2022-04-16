@@ -47,9 +47,7 @@ export async function get(params, request) {
   console.log({ width });
   const isAnimated = animated == 'true' || originalFormat == 'gif' ? true : false; //sets if animated
 
-  // console.log({flip, flop})
 
-  // if ((animated === 'true') || (originalFormat == "gif")) animated = true
 
   if (!src) return { status: 400, body: 'No src provided' };
 

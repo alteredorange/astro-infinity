@@ -35,15 +35,6 @@ const originalFormat = src.substring(src.lastIndexOf('.') + 1).toLocaleLowerCase
 //check if image is animated
 const isAnimated = animated == 'true' || originalFormat == 'gif' ? true : false; //sets if animated
 
-// const w = Astro.request.headers.get("width");
-
-//generate final link will all props that aren't "undefined"
-// const finalLink = `${src}?w=${w}&h=${height}&fit=crop&fm=${
-//   gif ? "gif" : "jpg"
-// }&flip=${flip ? "h" : "v"}&flop=${
-//   flop ? "h" : "v"
-// }&rotate=${rotate}&q=${style}&alt=${alt}`;
-
 //get format in priority of avif, webp, jpg
 const format =
   acceptHeaders == '*/*'
@@ -72,6 +63,8 @@ let webpSrcSet = '';
 let jpgSrcSet = '';
 let gifSrcSet = '';
 
+
+//all for preloading images TODO: make preloading work
 formats.forEach((e) => {
   if (e == 'avif') {
     //for 1-3 dpr
@@ -120,10 +113,6 @@ formats.forEach((e) => {
   }
 });
 
-const localImage = src.startsWith('/assets/');
-
-// console.log("SRC here: ", src)
-
 const newUrl =
   '/images/?src=' +
   src +
@@ -143,19 +132,10 @@ const newUrl =
 const blurUrl =
   '/images/?src=' + src + '&width=10' + '&format=' + format + '&blur=true' + '&gif=' + gif;
 
-// console.log("newURL: ", newUrl)
-// console.log("forma: " , forma);
-// console.log(avif)
 
-// const format = avif ? "avif" : webp ? "webp" : "jpg";
-
-// console.log(format)
 const finalW = width ? width + 'px' : '';
-// console.log({finalW})
 
-//sourse set for each image type
-const srcSet =
-  'srcSet=' + src + ' 1x, ' + src + ' 2x, ' + src + ' 3x, ' + src + ' 4x, ' + src + ' 5x';
+
 ---
 
 <!-- <img class={style} width={finalW} height={height + 'px'} src={srcUrl} alt={alt} /> --><picture>
