@@ -1,6 +1,6 @@
 ---
-let { src, width, height, rotate, gif, style, alt, flip, flop, animated, preload } = Astro.props;
-console.log({ style });
+let { src, width, height, rotate, gif, style, alt, flip, flop, animated, preload } = Astro.props
+// console.log({ style });
 
 //put all props in an object (except for alt, which doesn't need to be passed)
 const allProps = {
@@ -14,26 +14,27 @@ const allProps = {
   flop,
   animated,
   preload
-};
+}
 
 //remove undefined props
-Object.keys(allProps).forEach((key) => (allProps[key] === undefined ? delete allProps[key] : {}));
-Object.keys(allProps).forEach((key) => (allProps[key] == '' ? delete allProps[key] : {}));
+Object.keys(allProps).forEach((key) => (allProps[key] === undefined ? delete allProps[key] : {}))
+Object.keys(allProps).forEach((key) => (allProps[key] == '' ? delete allProps[key] : {}))
 
 //construct srcUrl with defined props
-let srcUrl = '/images/?';
-Object.keys(allProps).forEach((key) => (srcUrl += key + '=' + allProps[key] + '&'));
+let srcUrl = '/images/?'
+Object.keys(allProps).forEach((key) => (srcUrl += key + '=' + allProps[key] + '&'))
 
 //get rid of trailing &
 // srcUrl = srcUrl.slice(0, -1);
 
-const acceptHeaders = Astro.request.headers.get('accept');
+const acceptHeaders = Astro.request.headers.get('accept')
 
-//get original image format
-const originalFormat = src.substring(src.lastIndexOf('.') + 1).toLocaleLowerCase();
+//get original image format and flatten jpeg to jpg
+let originalFormat = src.substring(src.lastIndexOf('.') + 1).toLocaleLowerCase()
+if (originalFormat == 'jpeg') originalFormat = 'jpg'
 
 //check if image is animated
-const isAnimated = animated == 'true' || originalFormat == 'gif' ? true : false; //sets if animated
+const isAnimated = animated == 'true' || originalFormat == 'gif' ? true : false //sets if animated
 
 //get format in priority of avif, webp, jpg
 const format =
@@ -43,75 +44,138 @@ const format =
     ? 'avif'
     : acceptHeaders.includes('image/webp')
     ? 'webp'
-    : 'jpg';
+    : 'jpg'
 
-const finalFormat = isAnimated ? (acceptHeaders.includes('image/webp') ? 'webp' : 'gif') : format;
+const finalFormat = isAnimated ? (acceptHeaders.includes('image/webp') ? 'webp' : 'gif') : format
 // const b = test == "*/*" ? "avif" : test.includes("image/avif") ? "avif" : test.includes("image/webp") ? "webp" : "jpg";
 // console.log("FFFF", format)
-let formats = new Set();
+let formats = new Set()
 
-formats.add(finalFormat);
-if (finalFormat != originalFormat) formats.add(originalFormat);
+formats.add(finalFormat)
+if (finalFormat != originalFormat) formats.add(originalFormat)
 if (!isAnimated) {
-  formats.add('avif');
-  formats.add('webp');
-  formats.add('jpg');
+  formats.add('avif')
+  formats.add('webp')
+  formats.add('jpg')
 }
 
-let avifSrcSet = '';
-let webpSrcSet = '';
-let jpgSrcSet = '';
-let gifSrcSet = '';
+let avifSrcSet = ''
+let webpSrcSet = ''
+let jpgSrcSet = ''
+let gifSrcSet = ''
 
+const generateSrcSet = (e) => {
+  let srcset = ''
+  for (let i = 1; i <= 3; i++) {
+    let preloadURL = ''
+    let newProps = allProps
+    delete newProps['width']
+    delete newProps['height']
+    srcset += '/images/?width=' + width * i + '&height=' + height * i + '&'
+    Object.keys(newProps).forEach((key) => (srcset += key + '=' + newProps[key] + '&'))
 
-//all for preloading images TODO: make preloading work
-formats.forEach((e) => {
-  if (e == 'avif') {
-    //for 1-3 dpr
-    for (let i = 1; i <= 3; i++) {
-      let newProps = allProps;
-      delete newProps['width'];
-      delete newProps['height'];
-      avifSrcSet += '/images/?width=' + width * i + '&height=' + height * i + '&';
-      Object.keys(newProps).forEach((key) => (avifSrcSet += key + '=' + newProps[key] + '&'));
-      avifSrcSet += `format=${e} ` + i + 'x, ';
-    }
-    avifSrcSet = avifSrcSet.slice(0, -2);
-  } else if (e == 'webp') {
-    //for 1-3 dpr
-    for (let i = 1; i <= 3; i++) {
-      let newProps = allProps;
-      delete newProps['width'];
-      delete newProps['height'];
-      webpSrcSet += '/images/?width=' + width * i + '&height=' + height * i + '&';
-      Object.keys(newProps).forEach((key) => (webpSrcSet += key + '=' + newProps[key] + '&'));
-      webpSrcSet += `format=${e} ` + i + 'x, ';
-    }
-    webpSrcSet = webpSrcSet.slice(0, -2);
-  } else if (e == 'jpg') {
-    //for 1-3 dpr
-    for (let i = 1; i <= 3; i++) {
-      let newProps = allProps;
-      delete newProps['width'];
-      delete newProps['height'];
-      jpgSrcSet += '/images/?width=' + width * i + '&height=' + height * i + '&';
-      Object.keys(newProps).forEach((key) => (jpgSrcSet += key + '=' + newProps[key] + '&'));
-      jpgSrcSet += `format=${e} ` + i + 'x, ';
-    }
-    jpgSrcSet = jpgSrcSet.slice(0, -2);
-  } else if (e == 'gif') {
-    //for 1-3 dpr
-    for (let i = 1; i <= 3; i++) {
-      let newProps = allProps;
-      delete newProps['width'];
-      delete newProps['height'];
-      gifSrcSet += '/images/?width=' + width * i + '&height=' + height * i + '&';
-      Object.keys(newProps).forEach((key) => (gifSrcSet += key + '=' + newProps[key] + '&'));
-      gifSrcSet += `format=${e} ` + i + 'x, ';
-    }
-    gifSrcSet = gifSrcSet.slice(0, -2);
+    // if (newProps['preload'] == 'true') {
+    //        preloadURL += '/images/?width=' + width * i + '&height=' + height * i + '&';
+    //        Object.keys(newProps).forEach((key) => (preloadURL += key + '=' + newProps[key] + '&'))
+    //     preloadURL += `format=${e}`
+
+    //       const response = await fetch("http://localhost:3000"+preloadURL);
+    //       const data = await response.json()
+    //       // console.log(data.url)
+    // }
+
+    srcset += `format=${e} ` + i + 'x, '
   }
-});
+  srcset = srcset.slice(0, -2)
+  // console.log(srcset)
+  return srcset
+}
+
+const generatePreload = async (e) => {
+  // console.log(e)
+
+  let srcset = ''
+
+  //for loop with promises to resolve all urls
+
+  const sizes = [1, 2, 3]
+
+  const promises = sizes.map(async (i) => {
+    let preloadURL = ''
+    let newProps = allProps
+    delete newProps['width']
+    delete newProps['height']
+
+    preloadURL += '/images/?width=' + width * i + '&height=' + height * i + '&'
+    Object.keys(newProps).forEach((key) => (preloadURL += key + '=' + newProps[key] + '&'))
+    preloadURL += `format=${e}`
+
+    const response = await fetch('http://localhost:3000' + preloadURL)
+    const data = await response.json()
+    console.log(data.url)
+
+    if (e == 'avif') {
+      avifSrcSet += data.url + ` ` + i + 'x, '
+    }
+    if (e == 'webp') {
+      webpSrcSet += data.url + ` ` + i + 'x, '
+    }
+    if (e == 'jpg' || e == 'jpeg') {
+      jpgSrcSet += data.url + ` ` + i + 'x, '
+    }
+    if (e == 'gif') {
+      gifSrcSet += data.url + ` ` + i + 'x, '
+    }
+  })
+
+  await Promise.all(promises)
+  console.log('Finished!')
+  return
+
+  // for (let i = 1; i <= 3; i++) {
+  //   let preloadURL = '';
+  //   let newProps = allProps;
+  //   delete newProps['width'];
+  //   delete newProps['height'];
+
+  //     preloadURL += '/images/?width=' + width * i + '&height=' + height * i + '&';
+  //      Object.keys(newProps).forEach((key) => (preloadURL += key + '=' + newProps[key] + '&'))
+  //       preloadURL += `format=${e}`
+
+  //       const response = await fetch("http://localhost:3000"+preloadURL);
+  //       const data = await response.json()
+  //         console.log(data.url)
+
+  //     srcset += data.url
+
+  //   srcset += `format=${e} ` + i + 'x, ';
+  // }
+
+  // console.log(srcset)
+  srcset = srcset.slice(0, -2)
+  // console.log(srcset)
+
+  // if (e == 'avif')  avifSrcSet = srcset;
+  // if (e == 'webp')  webpSrcSet = srcset;
+  // if (e == 'jpg' || e == 'jpeg') jpgSrcSet = srcset;
+  // if (e == 'gif') gifSrcSet = srcset;
+  // console.log({avifSrcSet})
+  // return srcset;
+}
+//all for preloading images TODO: make preloading work
+const formatsArr = [...formats]
+const promises = formatsArr.map(async (e) => {
+  if (preload) return await generatePreload(e)
+  if (e == 'avif') avifSrcSet = generateSrcSet(e)
+  if (e == 'webp') webpSrcSet = generateSrcSet(e)
+  if (e == 'jpg') jpgSrcSet = generateSrcSet(e)
+  if (e == 'gif') gifSrcSet = generateSrcSet(e)
+})
+
+await Promise.all(promises)
+
+const preloadClass = preload ? '' : 'hidden '
+const noPreloadClass = preload ? 'hidden' : ''
 
 const newUrl =
   '/images/?src=' +
@@ -127,30 +191,38 @@ const newUrl =
   '&flip=' +
   flip +
   '&flop=' +
-  flop;
+  flop
 
 const blurUrl =
-  '/images/?src=' + src + '&width=10' + '&format=' + format + '&blur=true' + '&gif=' + gif;
+  '/images/?src=' + src + '&width=10' + '&format=' + format + '&blur=true' + '&gif=' + gif
 
-
-const finalW = width ? width + 'px' : '';
-
-
+const finalW = width ? width + 'px' : ''
 ---
 
-<!-- <img class={style} width={finalW} height={height + 'px'} src={srcUrl} alt={alt} /> --><picture>
-  <!-- avif source -->
+<!-- standard image element --><picture class={preloadClass}>
   <source srcset={avifSrcSet} type='image/avif' />
-  <!-- webp source -->
+
   <source srcset={webpSrcSet} type='image/webp' />
-  <!-- jpg source -->
-  <source srcset={jpgSrcSet} type='image/jpeg' />
-  <!-- webp video source -->
+
+  <source srcset={jpgSrcSet} type='image/jpg' />
+
   <source srcset={webpSrcSet} type='video/webp' />
-  <!-- gif source -->
+
   <source srcset={gifSrcSet} type='image/gif' />
 
-  <!-- fallback image -->
-  <!-- <img src={srcUrl} alt={alt} /> -->
+  <img src={src} alt={alt} class={style} width={finalW} height={height + 'px'} />
+</picture>
+<!-- preloaded image element -->
+<picture class={noPreloadClass}>
+  <source srcset={avifSrcSet} type='image/avif' />
+
+  <source srcset={webpSrcSet} type='image/webp' />
+
+  <source srcset={jpgSrcSet} type='image/jpg' />
+
+  <source srcset={webpSrcSet} type='video/webp' />
+
+  <source srcset={gifSrcSet} type='image/gif' />
+
   <img src={src} alt={alt} class={style} width={finalW} height={height + 'px'} />
 </picture>

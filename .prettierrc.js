@@ -1,1 +1,1 @@
-plugins: [require.resolve('prettier-plugin-astro')];
+plugins: [require.resolve('prettier-plugin-astro')]

@@ -1,10 +1,9 @@
 ---
 // Style Imports
-import '../styles/global.css';
-import Image from '../components/astro/Image.astro';
-import Head from '../components/astro/Head.astro';
-import '../styles/home.css';
-
+import '../styles/global.css'
+import Image from '../components/astro/Image.astro'
+import Head from '../components/astro/Head.astro'
+import '../styles/home.css'
 ---
 
 <html lang='en'>
@@ -47,6 +46,7 @@ import '../styles/home.css';
           style=''
           src='/assets/thisistheway.gif'
           alt='This Is the Way'
+
         />
 
         <figcaption class='font-semibold text-center'>125KB webp</figcaption>
@@ -54,69 +54,68 @@ import '../styles/home.css';
     </div>
 
     <h1>This Is The Way... To Better Images!</h1>
-    <span class='text-sm'
-      >Walking Mando by the awesome <a class='text-sky-400' href='https://linktr.ee/gingemar'
-        >gingemar
+    <span class='text-sm'>
+      Walking Mando by the awesome <a class='text-sky-400' href='https://linktr.ee/gingemar'>
+        gingemar
       </a>
     </span>
   </header>
   <div class='flex m-auto mt-10 text-center pt-15'>
     <div class='flex flex-wrap mr-auto ml-auto object-center  text-center items-center'>
       <figure>
-      <img
-        width='400px'
-        height='400px'
-        class=''
-        src='/assets/large.jpg'
-        alt='To Inifinity and Beyond'
-      />
-         <figcaption class='font-semibold text-center'>845KB jpg</figcaption>
+        <img
+          width='400px'
+          height='400px'
+          class=''
+          src='/assets/large.jpg'
+          alt='To Inifinity and Beyond'
+        />
+        <figcaption class='font-semibold text-center'>845KB jpg</figcaption>
       </figure>
-        <figure>
-      <Image
-        client:idle
-        src='/assets/large.jpg'
-        width='400'
-        height='400'
-        rotate=''
-        alt='To Inifinity and Beyond'
-        style='ml-10'
-      />
-         <figcaption class='font-semibold text-center'>7.7KB avif</figcaption>
+      <figure>
+        <Image
+          client:idle
+          src='/assets/large.jpg'
+          width='400'
+          height='400'
+          rotate=''
+          alt='To Inifinity and Beyond'
+          style='ml-10'
+          preload=true
+        />
+        <figcaption class='font-semibold text-center'>7.7KB avif</figcaption>
       </figure>
     </div>
   </div>
 
-   <div class='m-auto mt-10 text-center pt-15 pb-20'>
-   <h2 class="text-2xl">
-
-   Works with external images too!</h2><br>
-  <div class='flex m-auto  text-center '>
-    <div class='flex flex-wrap mr-auto ml-auto object-center  text-center items-center'>
-      <figure>
-      <img
-        width='400px'
-        height='400px'
-        class=''
-        src='https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg'
-        alt='To Inifinity and Beyond'
-      />
-         <figcaption class='font-semibold text-center'>292KB jpg</figcaption>
-      </figure>
+  <div class='m-auto mt-10 text-center pt-15 pb-20'>
+    <h2 class='text-2xl'>Works with external images too!</h2><br />
+    <div class='flex m-auto  text-center '>
+      <div class='flex flex-wrap mr-auto ml-auto object-center  text-center items-center'>
         <figure>
-      <Image
-        client:idle
-        src='https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg'
-        width='400'
-        height='400'
-        rotate=''
-        alt='To Inifinity and Beyond'
-        style='ml-10'
-        preload=true
-      />
-         <figcaption class='font-semibold text-center'>2KB avif</figcaption>
-      </figure>
-    </div>
+          <img
+            width='400px'
+            height='400px'
+            class=''
+            src='https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg'
+            alt='To Inifinity and Beyond'
+          />
+          <figcaption class='font-semibold text-center'>292KB jpg</figcaption>
+        </figure>
+        <figure>
+          <Image
+            client:idle
+            src='https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg'
+            width='400'
+            height='400'
+            rotate=''
+            alt='To Inifinity and Beyond'
+            style='ml-10'
+            preload='true'
+          />
+          <figcaption class='font-semibold text-center'>2KB avif</figcaption>
+        </figure>
+      </div>
     </div>
   </div>
 </html>

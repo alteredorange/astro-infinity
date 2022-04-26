@@ -1,8 +1,8 @@
 {
-  "insertPragma": false,
-  "jsxSingleQuote": false,
+  "htmlWhitespaceSensitivity": "ignore",
+  "bracketSameLine": true,
   "printWidth": 100,
-  "semi": true,
+  "semi": false,
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "none",
