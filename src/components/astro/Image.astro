@@ -46,6 +46,7 @@ const finalFormat = isAnimated ? (acceptHeaders.includes('image/webp') ? 'webp' 
 
 let formats = new Set()
 
+//check which formats should be generated
 formats.add(finalFormat)
 if (finalFormat != originalFormat) formats.add(originalFormat)
 if (!isAnimated) {
@@ -62,7 +63,6 @@ let gifSrcSet = ''
 const generateSrcSet = (e) => {
   let srcset = ''
   for (let i = 1; i <= 3; i++) {
-    let preloadURL = ''
     let newProps = allProps
     delete newProps['width']
     delete newProps['height']
@@ -93,7 +93,6 @@ const generatePreload = async (e) => {
 
     const response = await fetch('http://localhost:3000' + preloadURL)
     const data = await response.json()
-    console.log(data.url)
 
     if (e == 'avif') avifSrcSet += data.url + ` ` + i + 'x, '
     if (e == 'webp') webpSrcSet += data.url + ` ` + i + 'x, '
@@ -108,33 +107,17 @@ const generatePreload = async (e) => {
 //generate all srcsets and preloads
 const formatsArr = [...formats]
 const promises = formatsArr.map(async (e) => {
+  //if preload is true, generate the images and add to srcset
   if (preload) return await generatePreload(e)
+  //otherwise just generate the srcset
   return await generateSrcSet(e)
 })
 
+//wait for all the sources to be generated
 await Promise.all(promises)
 
 const preloadClass = preload ? '' : 'hidden '
 const noPreloadClass = preload ? 'hidden' : ''
-
-const newUrl =
-  '/images/?src=' +
-  src +
-  '&width=' +
-  width +
-  '&rotate=' +
-  rotate +
-  '&format=' +
-  format +
-  '&gif=' +
-  gif +
-  '&flip=' +
-  flip +
-  '&flop=' +
-  flop
-
-const blurUrl =
-  '/images/?src=' + src + '&width=10' + '&format=' + format + '&blur=true' + '&gif=' + gif
 
 const finalW = width ? width + 'px' : ''
 ---

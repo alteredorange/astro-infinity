@@ -75,7 +75,7 @@ export async function get(params, request) {
       .flop(flop)
       .resize(width, height, { fit: 'inside' })
       .webp({ effort: 0 })
-       .toBuffer()
+      .toBuffer()
 
     return new Response(resizedImage, {
       status: 200,
