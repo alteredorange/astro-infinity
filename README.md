@@ -24,6 +24,7 @@ import Image from '../components/astro/Image.astro'
 Use the Image component with the options below.
 
 ## options
+
 ```
 src 	//REQUIRED - the local path or full URL of an image
 width 	//Strongly recommended - the width of your image
@@ -42,27 +43,27 @@ alt 	//Strongly recommended - the alt tag of the image
 A source image that's located in the assets folder, rotated 45 degrees, with a margin-left of 10px, and padding of 10px (using tailwind):
 
 ```
-  <Image
-          src='/assets/large.jpg'
-          width='400'
-          height='400'
-          rotate='45'
-          alt='To Inifinity and Beyond'
-          style='ml-10 p-10'
-	/>
+<Image
+	src='/assets/large.jpg'
+	width='400'
+        height='400'
+        rotate='45'
+        alt='To Inifinity and Beyond'
+        style='ml-10 p-10'
+/>
 ```
 
 A remote image set to generate all images to file (for a purely static site)
 
 ```
-    <Image
-            src='https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg'
-            width='400'
-            height='400'
-            alt='shoot for the stars'
-            style='ml-10'
-	    preload=true
-          />
+<Image
+        src='https://images.pexels.com/photos/87009/earth-soil-creep-moon-lunar-surface-87009.jpeg'
+        width='400'
+        height='400'
+        alt='shoot for the stars'
+        style='ml-10'
+	preload=true
+/>
 ```
 
 ## About
