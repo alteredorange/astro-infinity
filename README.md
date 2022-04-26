@@ -1,5 +1,5 @@
 <p align="center">
-<img  src="./AstroInfinity.gif" alt="Astro Infinity logo">
+<img  src="./AstroInfinityLogo.gif" alt="Astro Infinity logo">
 </p>
 
 ## Install
