@@ -4,6 +4,8 @@ import '../styles/global.css'
 import Image from '../components/astro/Image.astro'
 import Head from '../components/astro/Head.astro'
 import '../styles/home.css'
+
+let time = Math.random()
 ---
 
 <html lang='en'>
@@ -15,16 +17,45 @@ import '../styles/home.css'
       /* max-width: min(100%, 78ch); */
     }
     h1 {
-      font-size: 2.5em;
+      font-size: 3.5em;
       font-weight: bold;
       margin: 0;
     }
+    .shimmer {
+  /* color: rgb(240, 12, 221); */
+  background: -webkit-linear-gradient(7deg, #0cbaba, #380036);
+   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/300% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 4.7s infinite;
+
+    }
+/* change color on hover */
+
+.shimmer:hover {
+  background: -webkit-linear-gradient(45deg, #0cbaba, #ffffff);
+   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/300% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 4.7s infinite;
+}
+
+
+ @keyframes shimmer {
+   0% {
+  -webkit-mask-position:right/100% 100%;
+   }
+ 100% {-webkit-mask-position:left}
+}
   </style>
 
-  <Head title='Astro image Demo!' />
+  <Head title='Astro Infinity - An Image Component For Astro' />
 
-  <header class='flex m-auto text-center '>
-    <h1 class='font-bold w-full p-10 pt-15 text-2xl text-orange-500 '>Astro Image Demo</h1>
+  <header class='flex m-auto mt-10 text-center'>
+    <h1 class='font-bold mt-10 w-full pt-25  uppercase shimmer'>Astro Infinity</h1>
+    <span class="-mt-7 text-light-900 italic">An Image Component For Astro</span>
     <div class='flex  flex-wrap mr-auto ml-auto object-center  text-center items-center'>
       <figure>
         <img
@@ -52,7 +83,7 @@ import '../styles/home.css'
       </figure>
     </div>
 
-    <h1>This Is The Way... To Better Images!</h1>
+    <h2 class="font-bold mt-5 text-gray-700 text-4xl">This Is The Way... To Better Images!</h2>
     <span class='text-sm'>
       Walking Mando by the awesome <a class='text-sky-400' href='https://linktr.ee/gingemar'>
         gingemar
