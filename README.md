@@ -24,17 +24,18 @@ import Image from '../components/astro/Image.astro'
 Use the Image component with the options below.
 
 ## options
-
-src //REQUIRED - the local path or full URL of an image
-width //Strongly recommended - the width of your image
-height //Strongly recommended - the height of your image
-rotate //how many degrees do you want to rotate your image
-style //the class names to pass back to the image (useful if using Tailwind)
-flip //flip your image on the vertical y axis, defaults to false
-flop //flip your image on the horizontal x axis, defaults to false
+```
+src 	//REQUIRED - the local path or full URL of an image
+width 	//Strongly recommended - the width of your image
+height 	//Strongly recommended - the height of your image
+rotate 	//how many degrees do you want to rotate your image
+style 	//the class names to pass back to the image (useful if using Tailwind)
+flip 	//flip your image on the vertical y axis, defaults to false
+flop 	//flip your image on the horizontal x axis, defaults to false
 animated //If the image is animated (i.e. animated webp), set this to true
 preload //whether or not images should save to disk (mainly for static sites), defaults to false
-alt //Strongly recommended - the alt tag of the image
+alt 	//Strongly recommended - the alt tag of the image
+```
 
 ## Examples
 
