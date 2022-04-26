@@ -1,11 +1,9 @@
 import sharp from 'sharp'
 
 export async function get(params, request) {
-  // console.log(request)
   const acceptHeaders = request.headers.get('accept')
   const hostName = new URL(request.url).hostname
   const searchParams = new URL(request.url).searchParams //gets the params
-  const gif = searchParams.get('gif') //gets the gif
   const webp = acceptHeaders.includes('image/webp')
 
   // block other domains
@@ -23,13 +21,7 @@ export async function get(params, request) {
   const height = Number(searchParams.get('height')) || null //gets the height
   const flip = searchParams.get('flip') == 'true' ? true : false //gets the flip
   const flop = searchParams.get('flop') == 'true' ? true : false //gets the flop
-  const grayscale = searchParams.get('grayscale') //gets the grayscale
-  const blur = searchParams.get('blur') //gets the blur
-  const sharpen = searchParams.get('sharpen') //gets the sharpen
-  const gamma = searchParams.get('gamma') //gets the gamma
-  const quality = searchParams.get('quality') //gets the quality
-  const progressive = searchParams.get('progressive') //gets the progressive
-  const prebuild = searchParams.get('prebuild') //if you want the image to be prebuit (true/false)
+
   let animated = searchParams.get('animated') //gets if animated (true/false)
   const originalFormat = src.substring(src.lastIndexOf('.') + 1).toLocaleLowerCase() //gets the original format
 
@@ -57,8 +49,6 @@ export async function get(params, request) {
   // 	else
 
   if (preload) {
-    // console.log(src);
-    // console.log('PRELOADING');
     const destination = `public/assets/prebuild/${src.substring(
       src.lastIndexOf('/') + 1
     )}-w=${width}-h=${height}.${format}`
@@ -85,9 +75,7 @@ export async function get(params, request) {
       .flop(flop)
       .resize(width, height, { fit: 'inside' })
       .webp({ effort: 0 })
-      // .toFormat("webp")
-      //if preload, to file, else buffer
-      .toBuffer()
+       .toBuffer()
 
     return new Response(resizedImage, {
       status: 200,
