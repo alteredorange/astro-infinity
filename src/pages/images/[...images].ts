@@ -1,5 +1,4 @@
 import sharp from 'sharp'
-// const { SSR, IMAGE_API_SECRET, PUBLIC_SOME_KEY } = import.meta.env;
 
 export async function get(params, request) {
   // console.log(request)
@@ -12,19 +11,9 @@ export async function get(params, request) {
   // block other domains
   // if (hostName !== 'localhost') return
 
-  // const format =
-  //   acceptHeaders == '*/*'
-  //     ? 'avif'
-  //     : acceptHeaders.includes('image/avif')
-  //     ? 'avif'
-  //     : acceptHeaders.includes('image/webp')
-  //     ? 'webp'
-  //     : 'jpg';
-  // console.log({format})
   const CHdpr = request.headers.get('dpr')
   const CHwidth =
     request.headers.get('viewport-width') || Math.round(request.headers.get('width') * (1 / CHdpr))
-  // console.log({ CHwidth });
 
   const src = searchParams.get('src') //gets the src
   const format = searchParams.get('format') //gets the format
@@ -44,7 +33,6 @@ export async function get(params, request) {
   let animated = searchParams.get('animated') //gets if animated (true/false)
   const originalFormat = src.substring(src.lastIndexOf('.') + 1).toLocaleLowerCase() //gets the original format
 
-  // console.log({ width });
   const isAnimated = animated == 'true' || originalFormat == 'gif' ? true : false //sets if animated
 
   if (!src) return { status: 400, body: 'No src provided' }
