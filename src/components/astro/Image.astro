@@ -1,6 +1,5 @@
 ---
 let { src, width, height, rotate, gif, style, alt, flip, flop, animated, preload } = Astro.props
-// console.log({ style });
 
 //put all props in an object (except for alt, which doesn't need to be passed)
 const allProps = {
@@ -24,9 +23,6 @@ Object.keys(allProps).forEach((key) => (allProps[key] == '' ? delete allProps[ke
 let srcUrl = '/images/?'
 Object.keys(allProps).forEach((key) => (srcUrl += key + '=' + allProps[key] + '&'))
 
-//get rid of trailing &
-// srcUrl = srcUrl.slice(0, -1);
-
 const acceptHeaders = Astro.request.headers.get('accept')
 
 //get original image format and flatten jpeg to jpg
@@ -47,8 +43,7 @@ const format =
     : 'jpg'
 
 const finalFormat = isAnimated ? (acceptHeaders.includes('image/webp') ? 'webp' : 'gif') : format
-// const b = test == "*/*" ? "avif" : test.includes("image/avif") ? "avif" : test.includes("image/webp") ? "webp" : "jpg";
-// console.log("FFFF", format)
+
 let formats = new Set()
 
 formats.add(finalFormat)
@@ -73,31 +68,17 @@ const generateSrcSet = (e) => {
     delete newProps['height']
     srcset += '/images/?width=' + width * i + '&height=' + height * i + '&'
     Object.keys(newProps).forEach((key) => (srcset += key + '=' + newProps[key] + '&'))
-
-    // if (newProps['preload'] == 'true') {
-    //        preloadURL += '/images/?width=' + width * i + '&height=' + height * i + '&';
-    //        Object.keys(newProps).forEach((key) => (preloadURL += key + '=' + newProps[key] + '&'))
-    //     preloadURL += `format=${e}`
-
-    //       const response = await fetch("http://localhost:3000"+preloadURL);
-    //       const data = await response.json()
-    //       // console.log(data.url)
-    // }
-
     srcset += `format=${e} ` + i + 'x, '
   }
   srcset = srcset.slice(0, -2)
-  // console.log(srcset)
-  return srcset
+
+  if (e == 'avif') avifSrcSet = srcset
+  if (e == 'webp') webpSrcSet = srcset
+  if (e == 'jpg') jpgSrcSet = srcset
+  if (e == 'gif') gifSrcSet = srcset
 }
 
 const generatePreload = async (e) => {
-  // console.log(e)
-
-  let srcset = ''
-
-  //for loop with promises to resolve all urls
-
   const sizes = [1, 2, 3]
 
   const promises = sizes.map(async (i) => {
@@ -114,62 +95,21 @@ const generatePreload = async (e) => {
     const data = await response.json()
     console.log(data.url)
 
-    if (e == 'avif') {
-      avifSrcSet += data.url + ` ` + i + 'x, '
-    }
-    if (e == 'webp') {
-      webpSrcSet += data.url + ` ` + i + 'x, '
-    }
-    if (e == 'jpg' || e == 'jpeg') {
-      jpgSrcSet += data.url + ` ` + i + 'x, '
-    }
-    if (e == 'gif') {
-      gifSrcSet += data.url + ` ` + i + 'x, '
-    }
+    if (e == 'avif') avifSrcSet += data.url + ` ` + i + 'x, '
+    if (e == 'webp') webpSrcSet += data.url + ` ` + i + 'x, '
+    if (e == 'jpg') jpgSrcSet += data.url + ` ` + i + 'x, '
+    if (e == 'gif') gifSrcSet += data.url + ` ` + i + 'x, '
   })
 
   await Promise.all(promises)
-  console.log('Finished!')
   return
-
-  // for (let i = 1; i <= 3; i++) {
-  //   let preloadURL = '';
-  //   let newProps = allProps;
-  //   delete newProps['width'];
-  //   delete newProps['height'];
-
-  //     preloadURL += '/images/?width=' + width * i + '&height=' + height * i + '&';
-  //      Object.keys(newProps).forEach((key) => (preloadURL += key + '=' + newProps[key] + '&'))
-  //       preloadURL += `format=${e}`
-
-  //       const response = await fetch("http://localhost:3000"+preloadURL);
-  //       const data = await response.json()
-  //         console.log(data.url)
-
-  //     srcset += data.url
-
-  //   srcset += `format=${e} ` + i + 'x, ';
-  // }
-
-  // console.log(srcset)
-  srcset = srcset.slice(0, -2)
-  // console.log(srcset)
-
-  // if (e == 'avif')  avifSrcSet = srcset;
-  // if (e == 'webp')  webpSrcSet = srcset;
-  // if (e == 'jpg' || e == 'jpeg') jpgSrcSet = srcset;
-  // if (e == 'gif') gifSrcSet = srcset;
-  // console.log({avifSrcSet})
-  // return srcset;
 }
-//all for preloading images TODO: make preloading work
+
+//generate all srcsets and preloads
 const formatsArr = [...formats]
 const promises = formatsArr.map(async (e) => {
   if (preload) return await generatePreload(e)
-  if (e == 'avif') avifSrcSet = generateSrcSet(e)
-  if (e == 'webp') webpSrcSet = generateSrcSet(e)
-  if (e == 'jpg') jpgSrcSet = generateSrcSet(e)
-  if (e == 'gif') gifSrcSet = generateSrcSet(e)
+  return await generateSrcSet(e)
 })
 
 await Promise.all(promises)
@@ -201,28 +141,18 @@ const finalW = width ? width + 'px' : ''
 
 <!-- standard image element --><picture class={preloadClass}>
   <source srcset={avifSrcSet} type='image/avif' />
-
   <source srcset={webpSrcSet} type='image/webp' />
-
   <source srcset={jpgSrcSet} type='image/jpg' />
-
   <source srcset={webpSrcSet} type='video/webp' />
-
   <source srcset={gifSrcSet} type='image/gif' />
-
   <img src={src} alt={alt} class={style} width={finalW} height={height + 'px'} />
 </picture>
 <!-- preloaded image element -->
 <picture class={noPreloadClass}>
   <source srcset={avifSrcSet} type='image/avif' />
-
   <source srcset={webpSrcSet} type='image/webp' />
-
   <source srcset={jpgSrcSet} type='image/jpg' />
-
   <source srcset={webpSrcSet} type='video/webp' />
-
   <source srcset={gifSrcSet} type='image/gif' />
-
   <img src={src} alt={alt} class={style} width={finalW} height={height + 'px'} />
 </picture>
