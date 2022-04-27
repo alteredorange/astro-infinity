@@ -25,7 +25,6 @@ Use the Image component with the options below. If you use the preload option, i
 
 ## options
 
-```
 | Param    | Description                                                                                                                             | Options/Examples                                                                               |
 |----------|-----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
 | src      | The local path or full URL of an image                                                                                                  | /assets/large.jpg, https://image.com/1.jpg                                                     |
@@ -44,7 +43,7 @@ Use the Image component with the options below. If you use the preload option, i
 | preload  | whether or not the image should save to disk (mainly for static sites), defaults to false                                               | true, "true"                                                                                   |
 | alt      | The alt tag of the image, strongly recommended to add this!                                                                             | "To infinity and beyond!"                                                                      |
 
-```
+
 
 ## Examples
 
