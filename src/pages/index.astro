@@ -157,19 +157,20 @@ let time = Math.random()
       <div class='flex flex-wrap mr-auto ml-auto object-center  text-center items-center'>
         <figure>
           <Image
-            client:idle
             src='https://images.pexels.com/photos/33684/astronaut-spacewalk-iss-tools.jpg'
             width='400'
             height='266'
             rotate=''
             alt='Hello From Space'
             style=''
+            fit="cover"
+            strategy="attention"
+            quality="50"
           />
           <figcaption class='font-semibold text-center'>Using Image API (SSR)</figcaption>
         </figure>
         <figure>
           <Image
-            client:idle
             src='https://images.pexels.com/photos/33684/astronaut-spacewalk-iss-tools.jpg'
             width='400'
             height='266'

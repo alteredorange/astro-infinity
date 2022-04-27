@@ -1,5 +1,5 @@
 ---
-let { src, width, height, rotate, style, alt, flip, flop, animated, preload } = Astro.props
+let { src, width, height, rotate, style, alt, flip, flop, animated, preload, fit, position, strategy, gravity, quality } = Astro.props
 
 //put all props in an object (except for alt, which doesn't need to be passed)
 const allProps = {
@@ -11,7 +11,9 @@ const allProps = {
   flip,
   flop,
   animated,
-  preload
+  preload,
+  fit,
+  position, strategy, gravity, quality
 }
 
 //remove undefined props

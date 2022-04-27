@@ -21,21 +21,29 @@ Import the image component into any astro page:
 import Image from '../components/astro/Image.astro'
 ```
 
-Use the Image component with the options below.
+Use the Image component with the options below. If you use the preload option, images will be put in the `public/assets/prebuild` folder (make sure it exists/don't delete it) and be served from there.
 
 ## options
 
 ```
-src 	//REQUIRED - the local path or full URL of an image
-width 	//Strongly recommended - the width of your image
-height 	//Strongly recommended - the height of your image
-rotate 	//how many degrees do you want to rotate your image
-style 	//the class names to pass back to the image (useful if using Tailwind)
-flip 	//flip your image on the vertical y axis, defaults to false
-flop 	//flip your image on the horizontal x axis, defaults to false
-animated //If the image is animated (i.e. animated webp), set this to true
-preload //whether or not images should save to disk (mainly for static sites), defaults to false
-alt 	//Strongly recommended - the alt tag of the image
+| Param    | Description                                                                                                                             | Options/Examples                                                                               |
+|----------|-----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| src      | The local path or full URL of an image                                                                                                  | /assets/large.jpg, https://image.com/1.jpg                                                     |
+| width    | The desired width of your image                                                                                                         | 400, 150, "250", "321"                                                                         |
+| height   | The height of your image                                                                                                                | 600, 250, "50", "521"                                                                          |
+| fit      | The resizing strategy                                                                                                                   | cover, contain, fill, inside, outside (default: inside)                                        |
+| position | When resizing, you can use position OR gravity OR strategy to focus on certain areas of the image                                       | top, right top, right, right bottom, bottom, left bottom, left, left top                       |
+| gravity  | When resizing, you can use position OR gravity OR strategy to focus on certain areas of the image                                       | north, northeast, east, southeast, south, southwest, west, northwest, center (default: center) |
+| strategy | When resizing, you can use position OR gravity OR strategy to focus on certain areas of the image. Strategy only works when fit=cover.  | entropy, attention (only usable when fit=cover)                                                |
+| quality  | Quality of image from 1-100                                                                                                             | 50, 25, "30", "60" (different defaults depending on image format)                              |
+| rotate   | How many degrees do you want to rotate your image                                                                                       | 45, 90, "180"                                                                                  |
+| style    | The class names to pass back to the image (useful if using Tailwind)                                                                    | "ml-10, p-20, mt-5"                                                                            |
+| flip     | Flip your image on the vertical y axis, defaults to false                                                                               | true, false, "true", "false"                                                                   |
+| flop     | Flip your image on the horizontal x axis, defaults to false                                                                             | true, false, "true", "false"                                                                   |
+| animated | If the image is animated, but not a gif (i.e. animated webp), set this to true                                                          | true, "true"                                                                                   |
+| preload  | whether or not the image should save to disk (mainly for static sites), defaults to false                                               | true, "true"                                                                                   |
+| alt      | The alt tag of the image, strongly recommended to add this!                                                                             | "To infinity and beyond!"                                                                      |
+
 ```
 
 ## Examples

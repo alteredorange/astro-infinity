@@ -21,6 +21,12 @@ export async function get(params, request) {
   const height = Number(searchParams.get('height')) || null //gets the height
   const flip = searchParams.get('flip') == 'true' ? true : false //gets the flip
   const flop = searchParams.get('flop') == 'true' ? true : false //gets the flop
+  const fit = searchParams.get('fit') || "inside" //cover, contain, fill, inside, outside (default: inside)
+  const position = searchParams.get('position') //top, right top, right, right bottom, bottom, left bottom, left, left top
+  const gravity = searchParams.get('gravity') //north, northeast, east, southeast, south, southwest, west, northwest, center
+  const strategy = searchParams.get('strategy') //entropy, attention
+  const quality = searchParams.get('quality') ? Number(searchParams.get('quality')) : null//integer 1-100
+
 
   let animated = searchParams.get('animated') //gets if animated (true/false)
   const originalFormat = src.substring(src.lastIndexOf('.') + 1).toLocaleLowerCase() //gets the original format
@@ -59,22 +65,21 @@ export async function get(params, request) {
       .rotate(rotate)
       .flip(flip)
       .flop(flop)
-      .resize(width, height, { fit: 'inside' })
-      .toFormat(format)
+      .resize(width, height, { fit, position, strategy, gravity })
+      .toFormat(format, { quality })
       .toFile(destination)
     //just send back the url of the asset
     return new Response(JSON.stringify({ url }), {
       status: 200
     })
   } else if (isAnimated && webp) {
-    console.log(src)
     //sharp needs path from root directory
     resizedImage = await sharp(imgData, { animated: isAnimated })
       .rotate(rotate)
       .flip(flip)
       .flop(flop)
-      .resize(width, height, { fit: 'inside' })
-      .webp({ effort: 0 })
+      .resize(width, height, { fit, position, strategy, gravity})
+      .webp({ effort: 0, quality })
       .toBuffer()
 
     return new Response(resizedImage, {
@@ -87,12 +92,11 @@ export async function get(params, request) {
       }
     })
   } else {
-    console.log(src)
     //sharp needs path from root directory
     resizedImage = await sharp(imgData, { animated: isAnimated })
       .rotate(rotate)
-      .resize(width, height, { fit: 'inside' })
-      .toFormat(format)
+      .resize(width, height, { fit, position, strategy, gravity })
+      .toFormat(format, { quality })
       .toBuffer()
   }
 
