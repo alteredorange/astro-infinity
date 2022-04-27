@@ -1,7 +1,18 @@
 {
-  "name": "astro-image",
+  "name": "astro-infinity",
   "version": "0.0.1",
-  "private": true,
+  "description": "An Image Component for Astro. Works with SSR and Static Sites.",
+  "homepage": "https://github.com/alteredorange/astro-infinity",
+  "bugs": {
+    "url": "https://github.com/alteredorange/astro-infinity/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alteredorange/astro-infinity"
+  },
+  "keywords": ["astro-component", "astro"],
+  "author": "Alteredorange",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "astro dev",
     "start": "node serveNode.mjs",
