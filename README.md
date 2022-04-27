@@ -21,7 +21,8 @@ Import the image component into any astro page:
 import Image from '../components/astro/Image.astro'
 ```
 
-Use the Image component with the options below. If you use the preload option, images will be put in the `public/assets/prebuild` folder (make sure it exists/don't delete it) and be served from there.
+Use the Image component with the options below.
+**If you use the preload option, images will be put in the `public/assets/prebuild` folder (make sure it exists/don't delete it) and be served from there.**
 
 ## options
 
