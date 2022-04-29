@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/alteredorange/astro-infinity/main/AstroInfinityRepeat.gif" alt="Astro Infinity logo">
+<img  src="./AstroInfinityRepeat.gif" alt="Astro Infinity logo">
 </p>
 
 ## Prerequisites
