@@ -1,0 +1,143 @@
+---
+let { src, width, height, rotate, style, alt, flip, flop, animated, preload, fit, position, strategy, gravity, quality } = Astro.props
+
+preload == "true" ? preload = true : preload = false
+//put all props in an object (except for alt, which doesn't need to be passed)
+const allProps = {
+  src,
+  width,
+  height,
+  rotate,
+  style,
+  flip,
+  flop,
+  animated,
+  preload,
+  fit,
+  position, strategy, gravity, quality
+}
+
+//remove undefined props
+Object.keys(allProps).forEach((key) => (allProps[key] === undefined ? delete allProps[key] : {}))
+Object.keys(allProps).forEach((key) => (allProps[key] == '' ? delete allProps[key] : {}))
+
+//construct srcUrl with defined props
+let srcUrl = '/images/?'
+Object.keys(allProps).forEach((key) => (srcUrl += key + '=' + allProps[key] + '&'))
+
+const acceptHeaders = Astro.request.headers.get('accept')
+
+//get original image format and flatten jpeg to jpg
+let originalFormat = src.substring(src.lastIndexOf('.') + 1).toLocaleLowerCase()
+if (originalFormat == 'jpeg') originalFormat = 'jpg'
+
+//check if image is animated
+const isAnimated = animated == 'true' || originalFormat == 'gif' ? true : false //sets if animated
+
+//get format in priority of avif, webp, jpg
+const format =
+  acceptHeaders == '*/*'
+    ? 'avif'
+    : acceptHeaders.includes('image/avif')
+    ? 'avif'
+    : acceptHeaders.includes('image/webp')
+    ? 'webp'
+    : 'jpg'
+
+const finalFormat = isAnimated ? (acceptHeaders.includes('image/webp') ? 'webp' : 'gif') : format
+
+let formats = new Set()
+
+//check which formats should be generated
+formats.add(finalFormat)
+if (finalFormat != originalFormat) formats.add(originalFormat)
+if (!isAnimated) {
+  formats.add('avif')
+  formats.add('webp')
+  formats.add('jpg')
+}
+
+let avifSrcSet = ''
+let webpSrcSet = ''
+let jpgSrcSet = ''
+let gifSrcSet = ''
+
+const generateSrcSet = (e) => {
+  let srcset = ''
+  for (let i = 1; i <= 3; i++) {
+    let newProps = allProps
+    delete newProps['width']
+    delete newProps['height']
+    srcset += '/images/?width=' + width * i + '&height=' + height * i + '&'
+    Object.keys(newProps).forEach((key) => (srcset += key + '=' + newProps[key] + '&'))
+    srcset += `format=${e} ` + i + 'x, '
+  }
+  srcset = srcset.slice(0, -2)
+
+  if (e == 'avif') avifSrcSet = srcset
+  if (e == 'webp') webpSrcSet = srcset
+  if (e == 'jpg') jpgSrcSet = srcset
+  if (e == 'gif') gifSrcSet = srcset
+}
+
+const generatePreload = async (e) => {
+  const sizes = [1, 2, 3]
+
+  const promises = sizes.map(async (i) => {
+    let preloadURL = ''
+    let newProps = allProps
+    delete newProps['width']
+    delete newProps['height']
+
+    preloadURL += '/images/?width=' + width * i + '&height=' + height * i + '&'
+    Object.keys(newProps).forEach((key) => (preloadURL += key + '=' + newProps[key] + '&'))
+    preloadURL += `format=${e}`
+
+    const response = await fetch('http://localhost:3000' + preloadURL)
+    const data = await response.json()
+
+    if (e == 'avif') avifSrcSet += data.url + ` ` + i + 'x, '
+    if (e == 'webp') webpSrcSet += data.url + ` ` + i + 'x, '
+    if (e == 'jpg') jpgSrcSet += data.url + ` ` + i + 'x, '
+    if (e == 'gif') gifSrcSet += data.url + ` ` + i + 'x, '
+  })
+
+  await Promise.all(promises)
+  return
+}
+
+//generate all srcsets and preloads
+const formatsArr = [...formats]
+const promises = formatsArr.map(async (e) => {
+  //if preload is true, generate the images and add to srcset
+  if (preload) return await generatePreload(e)
+  //otherwise just generate the srcset
+  return await generateSrcSet(e)
+})
+
+//wait for all the sources to be generated
+await Promise.all(promises)
+
+const preloadClass = preload ? '' : 'display: none;'
+const noPreloadClass = preload ? 'display: none;' : ''
+
+const finalW = width ? width + 'px' : ''
+---
+
+<!-- standard image element --><picture style={preloadClass}>
+  <source srcset={avifSrcSet} type='image/avif' />
+  <source srcset={webpSrcSet} type='image/webp' />
+  <source srcset={jpgSrcSet} type='image/jpg' />
+  <source srcset={webpSrcSet} type='video/webp' />
+  <source srcset={gifSrcSet} type='image/gif' />
+  <img src={src} alt={alt} class={style} width={finalW} height={height + 'px'} />
+</picture>
+<!-- preloaded image element -->
+<picture style={noPreloadClass}>
+  <source srcset={avifSrcSet} type='image/avif' />
+  <source srcset={webpSrcSet} type='image/webp' />
+  <source srcset={jpgSrcSet} type='image/jpg' />
+  <source srcset={webpSrcSet} type='video/webp' />
+  <source srcset={gifSrcSet} type='image/gif' />
+  <img src={src} alt={alt} class={style} width={finalW} height={height + 'px'} />
+</picture>

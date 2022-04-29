@@ -1,10 +1,12 @@
 {
-  "name": "astro-infinity-project",
-  "workspaces": ["demo", "packages/*"],
-  "version": "0.0.1",
+  "name": "astro-infinity",
+  "version": "0.0.17",
   "description": "An Image Component for Astro. Works With SSR and Static Sites.",
   "type": "module",
-  "homepage": "https://github.com/alteredorange/astro-infinity",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "homepage": "https://github.com/alterdorange/astro-infinity",
   "bugs": {
     "url": "https://github.com/alteredorange/astro-infinity/issues"
   },
@@ -20,8 +22,7 @@
     "image-component",
     "astro-infinity",
     "performance",
-    "ssr",
-    "static-site"
+    "ssr"
   ],
   "author": "Alteredorange",
   "license": "Apache-2.0",
@@ -30,21 +31,14 @@
     "start": "node serveNode.mjs",
     "build": "astro build",
     "preview": "astro preview",
-    "git": "commity -a -p",
-    "format": "pnpx prettier -w . --plugin-search-dir=."
+    "postinstall": "mkdir -p $INIT_CWD/src/pages/images/ && mkdir -p $INIT_CWD/public/infinity && cp [...images].ts $INIT_CWD/src/pages/images/"
   },
   "devDependencies": {
-    "@astrojs/node": "^0.0.2",
-    "@astrojs/svelte": "^0.0.2",
-    "@astrojs/tailwind": "^0.1.0",
-    "@pierred/commity": "^1.7.0",
     "astro": "^1.0.0-beta.12",
-    "express": "^4.17.3",
-    "prettier-plugin-astro": "^0.1.0-next.4",
-    "sharp": "^0.30.3",
-    "svelte": "^3.46.4"
+    "sharp": "^0.30.3"
   },
   "dependencies": {
-    "vite": "^2.9.1"
+    "vite": "^2.9.1",
+    "sharp": "^0.30.3"
   }
 }

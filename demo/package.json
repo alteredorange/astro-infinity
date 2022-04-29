@@ -1,6 +1,5 @@
 {
-  "name": "astro-infinity-project",
-  "workspaces": ["demo", "packages/*"],
+  "name": "astro-infinity",
   "version": "0.0.1",
   "description": "An Image Component for Astro. Works With SSR and Static Sites.",
   "type": "module",
@@ -34,9 +33,12 @@
     "format": "pnpx prettier -w . --plugin-search-dir=."
   },
   "devDependencies": {
+    "@astrojs/netlify": "^0.2.3",
     "@astrojs/node": "^0.0.2",
+    "@astrojs/partytown": "^0.1.0",
     "@astrojs/svelte": "^0.0.2",
     "@astrojs/tailwind": "^0.1.0",
+    "@astrojs/vercel": "^0.1.2",
     "@pierred/commity": "^1.7.0",
     "astro": "^1.0.0-beta.12",
     "express": "^4.17.3",
