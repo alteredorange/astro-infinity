@@ -1,8 +1,9 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@astrojs/node': ^0.0.2
+  '@astrojs/node': latest
   '@astrojs/tailwind': ^0.1.0
+  '@astrojs/vercel': latest
   '@pierred/commity': ^1.7.0
   astro: latest
   prettier-plugin-astro: ^0.1.0-next.4
@@ -14,8 +15,9 @@ dependencies:
   vite: 2.9.1
 
 devDependencies:
-  '@astrojs/node': 0.0.2
+  '@astrojs/node': 0.1.1
   '@astrojs/tailwind': 0.1.0
+  '@astrojs/vercel': 0.1.4
   '@pierred/commity': 1.7.0
   astro: 1.0.0-beta.19
   prettier-plugin-astro: 0.1.0-next.4
@@ -89,10 +91,10 @@ packages:
       - supports-color
     dev: true
 
-  /@astrojs/node/0.0.2:
-    resolution: {integrity: sha512-v2AdGyaHZE6UbnVSG+EvpR4HopPUIguV6dUwF8p1oCjANE7BwQvbwFtNsSQxdFU68PNOj/G8M/M3t6Dds+abmw==}
+  /@astrojs/node/0.1.1:
+    resolution: {integrity: sha512-Otcy9yhb4P1VdQTexrpijkONyh2vYEtAQAeRMsfD0XtILvQZlo9sASB27CiG18gHKvQz1dw5Jpgv8fiDT+akKg==}
     dependencies:
-      '@astrojs/webapi': 0.11.0
+      '@astrojs/webapi': 0.11.1
     dev: true
 
   /@astrojs/prism/0.4.1:
@@ -120,8 +122,11 @@ packages:
       - ts-node
     dev: true
 
-  /@astrojs/webapi/0.11.0:
-    resolution: {integrity: sha512-hzltX2kPjAX0zEKymU7ceDLCqkZN0ztgucqAzyvM62TJdznv/HRniJz850qKcqAcoTqDXBH5j/5FCO0GXSQLbw==}
+  /@astrojs/vercel/0.1.4:
+    resolution: {integrity: sha512-5RCMCisYVxG6v9bSnTt1m1+mGhV7WGvK+roA3fJKDVdY3+vB0vNrvf+JvMlRmRnNT6FQjOlMGccVLDZxPJxNFA==}
+    dependencies:
+      '@astrojs/webapi': 0.11.1
+      esbuild: 0.14.38
     dev: true
 
   /@astrojs/webapi/0.11.1:
@@ -1335,6 +1340,7 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-android-64/0.14.38:
@@ -1352,6 +1358,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-android-arm64/0.14.38:
@@ -1369,6 +1376,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-darwin-64/0.14.38:
@@ -1386,6 +1394,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-darwin-arm64/0.14.38:
@@ -1403,6 +1412,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-freebsd-64/0.14.38:
@@ -1420,6 +1430,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-freebsd-arm64/0.14.38:
@@ -1437,6 +1448,7 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-linux-32/0.14.38:
@@ -1454,6 +1466,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-linux-64/0.14.38:
@@ -1471,6 +1484,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-linux-arm/0.14.38:
@@ -1488,6 +1502,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-linux-arm64/0.14.38:
@@ -1505,6 +1520,7 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-linux-mips64le/0.14.38:
@@ -1522,6 +1538,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-linux-ppc64le/0.14.38:
@@ -1539,6 +1556,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-linux-riscv64/0.14.38:
@@ -1556,6 +1574,7 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-linux-s390x/0.14.38:
@@ -1573,6 +1592,7 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-netbsd-64/0.14.38:
@@ -1590,6 +1610,7 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-openbsd-64/0.14.38:
@@ -1607,6 +1628,7 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-sunos-64/0.14.38:
@@ -1624,6 +1646,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-windows-32/0.14.38:
@@ -1641,6 +1664,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-windows-64/0.14.38:
@@ -1658,6 +1682,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: false
     optional: true
 
   /esbuild-windows-arm64/0.14.38:
@@ -1695,6 +1720,7 @@ packages:
       esbuild-windows-32: 0.14.34
       esbuild-windows-64: 0.14.34
       esbuild-windows-arm64: 0.14.34
+    dev: false
 
   /esbuild/0.14.38:
     resolution: {integrity: sha512-12fzJ0fsm7gVZX1YQ1InkOE5f9Tl7cgf6JPYXRJtPIoE0zkWAbHdPHVPPaLi9tYAcEBqheGzqLn/3RdTOyBfcA==}
@@ -3197,7 +3223,7 @@ packages:
     resolution: {integrity: sha512-tzua9qWWi7iW4I42vUPKM+SfaF0vQSLAm4yO5J83mSwB7GeoWrDKC/K+8YCnYNwqP5duwazbw2X9l4m8SC2cUw==}
     engines: {node: '>=10'}
     dependencies:
-      semver: 7.3.6
+      semver: 7.3.7
     dev: true
 
   /node-addon-api/4.3.0:
@@ -4393,7 +4419,7 @@ packages:
     engines: {node: '>=12'}
     hasBin: true
     dependencies:
-      esbuild: 0.14.34
+      esbuild: 0.14.38
     dev: true
 
   /tunnel-agent/0.6.0:

@@ -1,12 +1,12 @@
 {
   "name": "astro-infinity",
-  "version": "0.0.17",
-  "description": "An Image Component for Astro. Works With SSR and Static Sites.",
+  "version": "0.0.21",
+  "description": "An Image Component for Astro. Works With SSR.",
   "type": "module",
   "exports": {
     ".": "./index.ts"
   },
-  "homepage": "https://github.com/alterdorange/astro-infinity",
+  "homepage": "https://github.com/alteredorange/astro-infinity",
   "bugs": {
     "url": "https://github.com/alteredorange/astro-infinity/issues"
   },

@@ -1,7 +1,7 @@
 {
-  "name": "astro-infinity",
+  "name": "astro-infinity-demo-site",
   "version": "0.0.1",
-  "description": "An Image Component for Astro. Works With SSR and Static Sites.",
+  "description": "An Image Component for Astro. Works With SSR.",
   "type": "module",
   "homepage": "https://github.com/alteredorange/astro-infinity",
   "bugs": {
@@ -33,7 +33,8 @@
     "format": "pnpx prettier -w . --plugin-search-dir=."
   },
   "devDependencies": {
-    "@astrojs/node": "^0.0.2",
+    "@astrojs/node": "latest",
+    "@astrojs/vercel": "latest",
     "@astrojs/tailwind": "^0.1.0",
     "@pierred/commity": "^1.7.0",
     "astro": "latest",
